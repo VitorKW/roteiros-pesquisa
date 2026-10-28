@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Roteiros - Pesquisa de viagens</title>
+<style>
+  :root{--navy:#130b5b;--orange:#ff7a1a;--gray:#6b6b80;--light:#f3f2f8;--border:#d1cfe6;--ink:#1a1a29}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;color:var(--ink);background:#fff}
+  #app{max-width:430px;min-height:100dvh;margin:0 auto;padding:32px 24px 24px;display:flex;flex-direction:column;gap:16px}
+  .brand{color:var(--orange);font-weight:700;font-size:20px}
+  h1{margin:0;color:var(--navy);font-size:28px;line-height:1.2}
+  h2{margin:0;color:var(--navy);font-size:21px;line-height:1.3}
+  p{margin:0;color:var(--gray);font-size:15px;line-height:1.45}
+  .small{font-size:12px}
+  .spacer{flex:1}
+  .note{background:var(--light);border-radius:12px;padding:14px;display:flex;flex-direction:column;gap:6px}
+  .note b{color:var(--navy);font-size:12px}
+  .note span{color:var(--gray);font-size:12px;line-height:1.45}
+  .bar{height:6px;border-radius:3px;background:var(--light);overflow:hidden}
+  .bar i{display:block;height:100%;background:var(--orange)}
+  .opts{display:flex;flex-direction:column;gap:8px}
+  .opt{display:flex;align-items:center;gap:12px;width:100%;text-align:left;background:#fff;border:1.5px solid var(--border);border-radius:12px;padding:11px 14px;font:inherit;font-size:14px;color:var(--ink);cursor:pointer}
+  .opt .ind{flex:none;width:18px;height:18px;border:2px solid var(--border);border-radius:50%}
+  .opt.multi .ind{border-radius:5px}
+  .opt.on{border-color:var(--navy)}
+  .opt.on .ind{background:var(--orange);border-color:var(--orange)}
+  .field{width:100%;border:1.5px solid var(--border);border-radius:12px;padding:15px 14px;font:inherit;font-size:15px}
+  .field:focus{outline:none;border-color:var(--navy)}
+  .check{display:flex;gap:10px;align-items:flex-start;font-size:12px;color:var(--gray);line-height:1.45}
+  .check input{margin-top:2px}
+  .btn{width:100%;border:0;border-radius:14px;padding:16px;background:var(--navy);color:#fff;font:inherit;font-size:16px;font-weight:600;cursor:pointer}
+  .btn.orange{background:var(--orange)}
+  .btn:disabled{opacity:.4;cursor:not-allowed}
+  .link{background:none;border:0;color:var(--gray);font:inherit;font-size:14px;font-weight:600;cursor:pointer;padding:8px}
+  .top{display:flex;justify-content:space-between;align-items:center;font-size:12px;font-weight:600;color:var(--gray)}
+</style>
+</head>
+<body>
+<div id="app"></div>
+
+<script>
+// ====== CONFIGURE AQUI ======
+const API_URL = https://script.google.com/macros/s/AKfycbyhJolpSsYDkHm-Kkqufm6-jqFs7aE2F2PKvrs206rhUWLqx4sTGGYfzzhMUnAAn7Vcqw/exec
+// ============================
+
+const Q = [
+  {q:'Nos últimos 12 meses, quantas viagens de lazer você realizou (com pelo menos uma noite fora de casa)?',multi:false,o:['1 viagem','2 a 3 viagens','4 a 6 viagens','7 ou mais viagens']},
+  {q:'Qual destas opções melhor descreve como você costuma organizar suas viagens?',multi:false,o:['Planejo tudo por conta própria.','Uso roteiros prontos como referência e faço adaptações.','Contrato pacotes ou serviços de agências de viagem.','Combino planejamento próprio com serviços de agências.','Normalmente viajo sem um roteiro definido.','Outro']},
+  {q:'Quanto tempo você costuma gastar planejando uma viagem?',multi:false,o:['Menos de 1 hora','1 a 3 horas','4 a 7 horas','8 horas ou mais','Varia muito','Não costumo planejar']},
+  {q:'Quais tipos de viagem você costuma fazer?',multi:true,o:['Viagens curtas e passeios de fim de semana.','Viagens de carro ou motorhome (road trips).','Viagens nacionais de vários dias.','Viagens internacionais.','Viagens de aventura, natureza ou ecoturismo.','Outro']},
+  {q:'Quais ferramentas ou fontes você utiliza para planejar suas viagens?',multi:true,o:['Planilhas (Excel / Google Sheets)','WhatsApp ou conversas com amigos e familiares','Redes sociais (Instagram, TikTok, YouTube)','Mapas e aplicativos de navegação','Blogs, fóruns e relatos de outros viajantes','Plataformas de roteiros de viagem','Inteligência Artificial (ChatGPT, Gemini, Claude)','Outro']},
+  {q:'Qual é a sua MAIOR dificuldade ao planejar uma viagem hoje?',multi:false,o:['Perder muito tempo juntando informações de sites e redes sociais diferentes.','Calcular e controlar o orçamento/gastos previstos.','Descobrir paradas legais e atrativos ao longo do trajeto (especialmente em roadtrips).','Saber se um roteiro pronto achado na internet é confiável e atualizado.','Outro']},
+  {q:'Imagine que você vai planejar sua próxima viagem. O quão útil seria poder pegar um roteiro pronto de outra pessoa e personalizá-lo para você?',multi:false,o:['Extremamente útil','Muito útil','Moderadamente útil','Pouco útil','Inútil','Não tenho opinião']},
+  {q:'Se você pudesse escolher apenas um recurso para uma plataforma de planejamento de viagens, qual seria o mais valioso para você?',multi:false,o:['Consultar: ver roteiros reais com fotos, dicas e avaliações da comunidade.','Adaptar: modificar datas, trocar atrações e incluir suas próprias paradas.','Orçamento integrado: ver os custos previstos de hospedagem, passeios e deslocamento reunidos no roteiro.','Modo Estrada: sugestões de rotas panorâmicas, campings e paradas pelo caminho.','Comparar com agências: ver pacotes de agências parceiras no mesmo local.']},
+  {q:'Depois de realizar uma viagem, você teria interesse em compartilhar seu roteiro para ajudar outras pessoas a planejar viagens semelhantes?',multi:false,o:['Sim, compartilharia o roteiro completo.','Sim, compartilharia apenas algumas dicas e informações.','Talvez, dependendo da facilidade para publicar.','Prefiro apenas consultar roteiros de outras pessoas.']}
+];
+
+const state = {
+  step: 0,
+  id: Date.now().toString(36) + Math.random().toString(36).slice(2, 8),
+  answers: Q.map(() => ({sel: [], outro: ''})),
+  phone: '', consent: false
+};
+
+const app = document.getElementById('app');
+
+function h(tag, props = {}, ...kids) {
+  const el = document.createElement(tag);
+  for (const [k, v] of Object.entries(props)) {
+    if (k === 'class') el.className = v;
+    else if (k.startsWith('on')) el.addEventListener(k.slice(2), v);
+    else if (k in el) el[k] = v;
+    else el.setAttribute(k, v);
+  }
+  kids.flat().filter(c => c !== null && c !== undefined).forEach(c => el.append(c));
+  return el;
+}
+
+function send(payload) {
+  if (!API_URL || API_URL.startsWith('COLE_AQUI')) { console.warn('API_URL não configurada', payload); return; }
+  fetch(API_URL, {
+    method: 'POST', mode: 'no-cors',
+    headers: {'Content-Type': 'text/plain;charset=utf-8'},
+    body: JSON.stringify(payload)
+  }).catch(() => {});
+}
+
+function formatAnswers() {
+  return Q.map((d, i) => {
+    const a = state.answers[i];
+    return a.sel.map(k => d.o[k] === 'Outro' ? 'Outro: ' + a.outro.trim() : d.o[k]).join('; ');
+  });
+}
+
+function go(step) { state.step = step; render(); window.scrollTo(0, 0); }
+
+function intro() {
+  return [
+    h('div', {class: 'brand'}, 'Roteiros'),
+    h('div', {class: 'spacer'}),
+    h('h1', {}, 'Pesquisa de preferências: tendências e frequências de viagens'),
+    h('p', {}, 'Leva cerca de 2 minutos. São 9 perguntas rápidas sobre como você planeja suas viagens.'),
+    h('div', {class: 'note'},
+      h('b', {}, 'Transparência'),
+      h('span', {}, 'Usamos suas respostas apenas para validação e estudo de produto, de forma agregada. Sua participação é voluntária. Ao final, você pode (se quiser) deixar seu WhatsApp para receber um roteiro de teste; esse número só será usado para isso.')),
+    h('div', {class: 'spacer'}),
+    h('button', {class: 'btn', onclick: () => go(1)}, 'Começar')
+  ];
+}
+
+function question(i) {
+  const d = Q[i], a = state.answers[i];
+  const outroIdx = d.o.indexOf('Outro');
+  const outroOn = () => outroIdx >= 0 && a.sel.includes(outroIdx);
+  const btn = h('button', {class: 'btn', onclick: () => {
+    if (i === 8) send({action: 'create', id: state.id, answers: formatAnswers()});
+    go(i + 2);
+  }}, i === 8 ? 'Concluir' : 'Continuar');
+  const refresh = () => { btn.disabled = !(a.sel.length > 0 && (!outroOn() || a.outro.trim())); };
+
+  const opts = h('div', {class: 'opts'}, d.o.map((label, k) => {
+    const on = a.sel.includes(k);
+    return h('button', {type: 'button', class: 'opt' + (on ? ' on' : '') + (d.multi ? ' multi' : ''), onclick: () => {
+      if (d.multi) a.sel = on ? a.sel.filter(x => x !== k) : [...a.sel, k];
+      else a.sel = [k];
+      render();
+      if (k === outroIdx && a.sel.includes(k)) setTimeout(() => app.querySelector('input.field')?.focus());
+    }}, h('span', {class: 'ind'}), h('span', {}, label));
+  }));
+
+  const outroField = outroOn()
+    ? h('input', {class: 'field', type: 'text', placeholder: 'Conte para a gente', value: a.outro, oninput: e => { a.outro = e.target.value; refresh(); }})
+    : null;
+
+  refresh();
+  return [
+    h('div', {class: 'top'},
+      h('span', {}, `Pergunta ${i + 1} de 9`),
+      h('button', {class: 'link', onclick: () => go(i)}, 'Voltar')),
+    h('div', {class: 'bar'}, h('i', {style: `width:${((i + 1) / 9) * 100}%`})),
+    h('h2', {}, d.q),
+    h('p', {class: 'small'}, d.multi ? 'Escolha quantas quiser' : 'Escolha uma opção'),
+    opts, outroField,
+    h('div', {class: 'spacer'}),
+    btn
+  ];
+}
+
+function finalScreen() {
+  const btn = h('button', {class: 'btn orange', disabled: true, onclick: () => {
+    send({action: 'contact', id: state.id, whatsapp: state.phone.trim(), consent: 'sim'});
+    go(11);
+  }}, 'Quero receber');
+  const check = () => {
+    const n = state.phone.replace(/\D/g, '').length;
+    btn.disabled = !(n >= 10 && n <= 13 && state.consent);
+  };
+  return [
+    h('div', {class: 'brand'}, 'Roteiros'),
+    h('div', {class: 'spacer'}),
+    h('h1', {}, 'Obrigado! Quer um roteiro de teste?'),
+    h('p', {}, 'Estamos montando, manualmente, roteiros sob medida para validar nossa ideia. Deixe seu WhatsApp e enviamos um roteiro pensado para o seu perfil de viagem. É opcional.'),
+    h('input', {class: 'field', type: 'tel', placeholder: 'WhatsApp: (00) 00000-0000', autocomplete: 'tel', oninput: e => { state.phone = e.target.value; check(); }}),
+    h('label', {class: 'check'},
+      h('input', {type: 'checkbox', onchange: e => { state.consent = e.target.checked; check(); }}),
+      h('span', {}, 'Autorizo receber o roteiro de teste pelo WhatsApp e o uso do meu número apenas para esse fim.')),
+    h('div', {class: 'spacer'}),
+    btn,
+    h('button', {class: 'link', onclick: () => go(11)}, 'Agora não')
+  ];
+}
+
+function thanks() {
+  const comContato = state.phone.trim() && state.consent;
+  return [
+    h('div', {class: 'brand'}, 'Roteiros'),
+    h('div', {class: 'spacer'}),
+    h('h1', {}, 'Tudo certo, obrigado!'),
+    h('p', {}, comContato
+      ? 'Vamos montar seu roteiro de teste e enviar pelo WhatsApp em até 48 horas.'
+      : 'Suas respostas foram registradas. Obrigado por ajudar a melhorar o planejamento de viagens.'),
+    h('div', {class: 'spacer'})
+  ];
+}
+
+function render() {
+  app.replaceChildren();
+  const s = state.step;
+  const nodes = s === 0 ? intro() : s <= 9 ? question(s - 1) : s === 10 ? finalScreen() : thanks();
+  app.append(...nodes.filter(Boolean));
+}
+
+render();
+</script>
+</body>
+</html>
