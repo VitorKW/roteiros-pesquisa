@@ -1,198 +1,382 @@
 <!doctype html>
-<html lang="pt-BR">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Roteiros - Pesquisa de viagens</title>
-<style>
-  :root{--navy:#130b5b;--orange:#ff7a1a;--gray:#6b6b80;--light:#f3f2f8;--border:#d1cfe6;--ink:#1a1a29}
-  *{box-sizing:border-box}
-  body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;color:var(--ink);background:#fff}
-  #app{max-width:430px;min-height:100dvh;margin:0 auto;padding:32px 24px 24px;display:flex;flex-direction:column;gap:16px}
-  .brand{color:var(--orange);font-weight:700;font-size:20px}
-  h1{margin:0;color:var(--navy);font-size:28px;line-height:1.2}
-  h2{margin:0;color:var(--navy);font-size:21px;line-height:1.3}
-  p{margin:0;color:var(--gray);font-size:15px;line-height:1.45}
-  .small{font-size:12px}
-  .spacer{flex:1}
-  .note{background:var(--light);border-radius:12px;padding:14px;display:flex;flex-direction:column;gap:6px}
-  .note b{color:var(--navy);font-size:12px}
-  .note span{color:var(--gray);font-size:12px;line-height:1.45}
-  .bar{height:6px;border-radius:3px;background:var(--light);overflow:hidden}
-  .bar i{display:block;height:100%;background:var(--orange)}
-  .opts{display:flex;flex-direction:column;gap:8px}
-  .opt{display:flex;align-items:center;gap:12px;width:100%;text-align:left;background:#fff;border:1.5px solid var(--border);border-radius:12px;padding:11px 14px;font:inherit;font-size:14px;color:var(--ink);cursor:pointer}
-  .opt .ind{flex:none;width:18px;height:18px;border:2px solid var(--border);border-radius:50%}
-  .opt.multi .ind{border-radius:5px}
-  .opt.on{border-color:var(--navy)}
-  .opt.on .ind{background:var(--orange);border-color:var(--orange)}
-  .field{width:100%;border:1.5px solid var(--border);border-radius:12px;padding:15px 14px;font:inherit;font-size:15px}
-  .field:focus{outline:none;border-color:var(--navy)}
-  .check{display:flex;gap:10px;align-items:flex-start;font-size:12px;color:var(--gray);line-height:1.45}
-  .check input{margin-top:2px}
-  .btn{width:100%;border:0;border-radius:14px;padding:16px;background:var(--navy);color:#fff;font:inherit;font-size:16px;font-weight:600;cursor:pointer}
-  .btn.orange{background:var(--orange)}
-  .btn:disabled{opacity:.4;cursor:not-allowed}
-  .link{background:none;border:0;color:var(--gray);font:inherit;font-size:14px;font-weight:600;cursor:pointer;padding:8px}
-  .top{display:flex;justify-content:space-between;align-items:center;font-size:12px;font-weight:600;color:var(--gray)}
-</style>
-</head>
-<body>
-<div id="app"></div>
+<html lang="pt-BR"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#123f45"><title>Horizonte — Descubra sua próxima viagem</title><style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap');
+:root{--ink:#16363c;--teal:#176e6d;--accent:#ed8755;--pale:#eaf5f2;--line:#dce8e5;--muted:#688080;--bg:#f7faf8;--shadow:0 12px 36px #16363c12}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);font-family:'DM Sans',Arial,sans-serif;color:var(--ink)}
+button,input,select,textarea{font:inherit}button{cursor:pointer}
+h1,h2,h3,h4{font-family:Outfit,Arial,sans-serif;margin:0}p{line-height:1.55}
+.shell{display:grid;grid-template-columns:245px minmax(0,1fr);min-height:100vh}
+.side{background:#103f43;color:white;padding:28px 18px;position:sticky;top:0;height:100vh;display:flex;flex-direction:column}
+.brand{display:flex;align-items:center;gap:10px;padding:5px 10px 32px;font:800 27px Outfit;letter-spacing:-1px}
+.brand i{background:#e8a271;color:#163c40;width:35px;height:35px;border-radius:12px;display:grid;place-items:center;font-style:normal;font-size:20px}
+.nav{display:flex;flex-direction:column;gap:6px}
+.nav button{border:0;background:transparent;color:#c5dcda;text-align:left;padding:13px 14px;border-radius:13px;font-weight:700}
+.nav button.active,.nav button:hover{background:#ffffff1d;color:white}
+.side-note{margin-top:auto;border:1px solid #ffffff38;padding:15px;border-radius:15px;font-size:12px;color:#d2e9e4;line-height:1.6}
+.main{min-width:0}
+.top{display:flex;align-items:center;justify-content:space-between;padding:20px 38px;background:#ffffffd9;border-bottom:1px solid var(--line)}
+.top strong{font-family:Outfit}
+.tag{border-radius:30px;background:#eff4f1;padding:8px 12px;color:var(--teal);font-size:12px;font-weight:800}
+.content{max-width:1100px;margin:auto;padding:30px 38px 70px}
+.page{display:none}.page.active{display:block}
+.hero{border-radius:24px;min-height:290px;padding:42px;background:linear-gradient(90deg,#103f43e8 0%,#103f43b6 45%,#103f4320 100%),url('https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=1500&q=85') center/cover;color:white;display:flex;align-items:center}
+.hero h1{font-size:clamp(30px,4vw,50px);line-height:1.07;max-width:540px}
+.hero p{max-width:450px;color:#ecf6f0}
+.eyebrow{text-transform:uppercase;font-size:12px;letter-spacing:2.5px;font-weight:800;color:#f5bb85;margin-bottom:12px}
+.section-title{margin:31px 0 18px}.section-title h2{font-size:27px}.section-title p{color:var(--muted);margin:5px 0 0}
+.cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+.card{overflow:hidden;background:white;border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow)}
+.card img{width:100%;height:168px;object-fit:cover;display:block}
+.card-body{padding:17px}.card h3{font-size:20px}.card p{font-size:14px}
+.small{font-size:13px;color:var(--muted)}
+.pill{display:inline-block;background:var(--pale);color:var(--teal);border-radius:20px;padding:5px 9px;font-size:11px;font-weight:800}
+.btn{border:0;border-radius:11px;background:var(--teal);color:white;padding:12px 18px;font-weight:800}
+.btn:hover{filter:brightness(.92)}
+.btn.alt{background:#edf5f1;color:var(--teal)}
+.btn.orange{background:var(--accent);color:#2a3935}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.spread{justify-content:space-between}
+.input{border:1px solid #d7e4e0;border-radius:11px;padding:12px 13px;background:white;min-width:0;color:var(--ink);width:100%}
+.input:focus{outline:2px solid #176e6d55;border-color:var(--teal)}
+textarea.input{min-height:84px;resize:vertical}
+label,.lbl{font-weight:800;font-size:14px;display:block;margin-bottom:8px}
+.filter{display:grid;grid-template-columns:2fr 1fr;gap:12px;padding:18px;background:white;border:1px solid var(--line);border-radius:17px}
+.heading{margin:4px 0 25px}.heading h1{font-size:35px}.heading p{color:var(--muted);margin:6px 0}
+.layout2{display:grid;grid-template-columns:1.3fr 1fr;gap:20px}
+.panel{background:white;border:1px solid var(--line);border-radius:18px;padding:22px;box-shadow:var(--shadow)}
+.panel h3{font-size:22px;margin-bottom:14px}
+.steps3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:22px}
+.stepbox{background:white;border:1px solid var(--line);border-radius:16px;padding:18px}
+.stepbox b{display:grid;place-items:center;width:32px;height:32px;border-radius:50%;background:var(--pale);color:var(--teal);font-family:Outfit;margin-bottom:10px}
+.stepbox span{font-size:14px;color:var(--muted)}
+.notice{font-size:12px;background:#fff5e9;border:1px solid #f6dbb6;border-radius:10px;padding:11px;color:#74552e;margin:14px 0;line-height:1.5}
+.bar{height:6px;border-radius:3px;background:var(--pale);overflow:hidden;margin:8px 0 22px}
+.bar i{display:block;height:100%;background:var(--accent);transition:width .25s}
+.field{margin-bottom:22px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{border:1.5px solid var(--line);background:#fff;border-radius:30px;padding:10px 14px;font-weight:600;font-size:14px;color:var(--ink)}
+.chip.on{background:var(--teal);color:#fff;border-color:var(--teal)}
+.consent{display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--muted);line-height:1.5;font-weight:400}
+.consent input{margin-top:3px;accent-color:var(--teal)}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
+.err{background:#fdecec;color:#8a2c2c;border-radius:10px;padding:10px 12px;font-size:13px;margin-top:12px}
+.cost-row{display:grid;grid-template-columns:1fr 150px;align-items:center;gap:16px;padding:11px 0;border-bottom:1px solid var(--line)}
+.total{font:800 32px Outfit;color:var(--teal)}
+.feedback{padding:12px;background:#e8f6ef;color:#1c634c;border-radius:10px;font-size:13px;margin-top:12px}
+.empty{text-align:center;padding:30px;color:var(--muted)}
+.mobilebar{display:none}
+.hidden{display:none!important}
+@media(max-width:950px){.shell{grid-template-columns:1fr}.side{display:none}.content{padding:22px 18px 100px}.top{padding:15px 18px}.mobilebar{display:flex;position:fixed;bottom:0;left:0;right:0;background:white;border-top:1px solid var(--line);justify-content:space-around;padding:7px 2px;z-index:5;box-shadow:0 -4px 25px #0000000c}.mobilebar button{font-size:11px;background:none;border:0;color:var(--muted);padding:8px 2px;font-weight:800}.mobilebar button.active{color:var(--teal)}.cards{grid-template-columns:repeat(2,minmax(0,1fr))}.layout2{grid-template-columns:1fr}.steps3{grid-template-columns:1fr}}
+@media(max-width:580px){.cards{grid-template-columns:1fr}.filter{grid-template-columns:1fr}.hero{min-height:310px;padding:24px}.hero h1{font-size:34px}.cost-row{grid-template-columns:1fr 115px}.heading h1{font-size:29px}.tag{display:none}}
+</style></head><body>
+<div class="shell">
+<aside class="side"><div class="brand"><i>✦</i> horizonte</div><nav class="nav" id="nav"></nav>
+<div class="side-note"><b>Piloto</b><br>As sugestões de destino são montadas manualmente pela nossa equipe. Seu contato só é usado para enviar a sugestão.</div></aside>
+<div class="main">
+<header class="top"><strong>✦ Descubra seu próximo caminho</strong><span class="tag">PILOTO • SUGESTÕES FEITAS À MÃO</span></header>
+<main class="content">
+
+<section id="inicio" class="page active">
+  <div class="hero"><div>
+    <div class="eyebrow">Sua próxima viagem</div>
+    <h1>Conte como você gosta de viajar. Nós sugerimos o destino.</h1>
+    <p>Responda algumas perguntas rápidas e receba uma sugestão pensada para o seu perfil.</p>
+    <button class="btn orange" data-go="descobrir">Descobrir minha viagem →</button>
+  </div></div>
+  <div class="section-title"><h2>Como funciona</h2></div>
+  <div class="steps3">
+    <div class="stepbox"><b>1</b><h3>Conte seu jeito</h3><span>Cerca de 1 minuto de perguntas sobre época, orçamento e gostos.</span></div>
+    <div class="stepbox"><b>2</b><h3>Nossa equipe analisa</h3><span>A sugestão é montada manualmente, olhando o seu perfil com cuidado.</span></div>
+    <div class="stepbox"><b>3</b><h3>Você recebe</h3><span>Enviamos o destino ideal por e-mail ou WhatsApp em até 48 horas.</span></div>
+  </div>
+  <div class="section-title"><h2>Inspiração para viajar</h2><p>Alguns lugares para começar a sonhar.</p></div>
+  <div class="cards" id="homeCards"></div>
+</section>
+
+<section id="destinos" class="page">
+  <div class="heading"><h1>Explore destinos</h1><p>Pesquise um lugar e, se gostar, peça uma sugestão parecida.</p></div>
+  <div class="filter">
+    <div><label for="searchDest">Destino ou país</label><input class="input" id="searchDest" placeholder="Ex.: Gramado, Chile, praia..."></div>
+    <div><label for="typeDest">Estilo de viagem</label><select class="input" id="typeDest"><option value="">Todos</option><option>Natureza</option><option>Cultura</option><option>Estrada</option></select></div>
+  </div>
+  <div class="section-title"><h2>Resultados</h2><span class="small" id="resultCount"></span></div>
+  <div class="cards" id="destCards"></div>
+</section>
+
+<section id="descobrir" class="page">
+  <div class="heading"><h1>Descobrir minha viagem</h1><p>Responda em poucos passos. Depois, nossa equipe envia a sugestão.</p></div>
+  <div class="panel" style="max-width:720px">
+    <div id="formArea">
+      <div class="small" id="stepLabel"></div>
+      <div class="bar"><i id="bar"></i></div>
+      <div id="formBody"></div>
+      <div id="formErr"></div>
+      <div class="row spread" style="margin-top:8px">
+        <button class="btn alt" id="btnBack" type="button">← Voltar</button>
+        <button class="btn" id="btnNext" type="button">Continuar</button>
+      </div>
+    </div>
+    <div id="doneArea" class="hidden">
+      <h3>Recebemos o seu pedido! 🎉</h3>
+      <p id="doneText"></p>
+      <div class="notice">As sugestões são montadas manualmente pela nossa equipe, por isso levam até 48 horas.</div>
+      <button class="btn alt" id="btnAgain" type="button">Fazer outro pedido</button>
+    </div>
+  </div>
+</section>
+
+<section id="gastos" class="page">
+  <div class="heading"><h1>Planeje seus gastos</h1><p>Ajuste os valores da sua viagem para calcular o orçamento estimado.</p></div>
+  <div class="layout2">
+    <div class="panel"><h3>Simulador de orçamento</h3>
+      <label for="tripName">Nome da viagem</label><input id="tripName" class="input" value="Minha próxima aventura">
+      <div id="budgetFields"></div>
+      <button class="btn" id="btnSave" style="margin-top:18px">Salvar neste navegador</button>
+      <div id="budgetStatus"></div></div>
+    <div class="panel"><h3>Resumo da viagem</h3>
+      <p class="small">Valor total planejado</p><div class="total" id="budgetTotal">R$ 0,00</div>
+      <p id="budgetDetails" class="small"></p>
+      <div class="notice">Este orçamento é apenas uma estimativa sua. Não é uma cotação e não considera impostos, câmbio ou imprevistos.</div>
+      <button class="btn alt" id="btnReset">Restaurar valores de exemplo</button></div>
+  </div>
+</section>
+
+</main></div></div>
+<nav class="mobilebar" id="mobileNav"></nav>
 
 <script>
 // ====== CONFIGURE AQUI ======
-const API_URL = "https://script.google.com/macros/s/AKfycbyhJolpSsYDkHm-Kkqufm6-jqFs7aE2F2PKvrs206rhUWLqx4sTGGYfzzhMUnAAn7Vcqw/exec";
+const API_URL = "https://script.google.com/macros/s/AKfycbw8wH0kXpIbZEz10i1zSSWU5Ww9l7-xKeCnFvmGpjkszRvWsFigFuXBn-Ca_Cr0Wik/exec";
 // ============================
 
-const Q = [
-  {q:'Nos últimos 12 meses, quantas viagens de lazer você realizou (com pelo menos uma noite fora de casa)?',multi:false,o:['1 viagem','2 a 3 viagens','4 a 6 viagens','7 ou mais viagens']},
-  {q:'Qual destas opções melhor descreve como você costuma organizar suas viagens?',multi:false,o:['Planejo tudo por conta própria.','Uso roteiros prontos como referência e faço adaptações.','Contrato pacotes ou serviços de agências de viagem.','Combino planejamento próprio com serviços de agências.','Normalmente viajo sem um roteiro definido.','Outro']},
-  {q:'Quanto tempo você costuma gastar planejando uma viagem?',multi:false,o:['Menos de 1 hora','1 a 3 horas','4 a 7 horas','8 horas ou mais','Varia muito','Não costumo planejar']},
-  {q:'Quais tipos de viagem você costuma fazer?',multi:true,o:['Viagens curtas e passeios de fim de semana.','Viagens de carro ou motorhome (road trips).','Viagens nacionais de vários dias.','Viagens internacionais.','Viagens de aventura, natureza ou ecoturismo.','Outro']},
-  {q:'Quais ferramentas ou fontes você utiliza para planejar suas viagens?',multi:true,o:['Planilhas (Excel / Google Sheets)','WhatsApp ou conversas com amigos e familiares','Redes sociais (Instagram, TikTok, YouTube)','Mapas e aplicativos de navegação','Blogs, fóruns e relatos de outros viajantes','Plataformas de roteiros de viagem','Inteligência Artificial (ChatGPT, Gemini, Claude)','Outro']},
-  {q:'Qual é a sua MAIOR dificuldade ao planejar uma viagem hoje?',multi:false,o:['Perder muito tempo juntando informações de sites e redes sociais diferentes.','Calcular e controlar o orçamento/gastos previstos.','Descobrir paradas legais e atrativos ao longo do trajeto (especialmente em roadtrips).','Saber se um roteiro pronto achado na internet é confiável e atualizado.','Outro']},
-  {q:'Imagine que você vai planejar sua próxima viagem. O quão útil seria poder pegar um roteiro pronto de outra pessoa e personalizá-lo para você?',multi:false,o:['Extremamente útil','Muito útil','Moderadamente útil','Pouco útil','Inútil','Não tenho opinião']},
-  {q:'Se você pudesse escolher apenas um recurso para uma plataforma de planejamento de viagens, qual seria o mais valioso para você?',multi:false,o:['Consultar: ver roteiros reais com fotos, dicas e avaliações da comunidade.','Adaptar: modificar datas, trocar atrações e incluir suas próprias paradas.','Orçamento integrado: ver os custos previstos de hospedagem, passeios e deslocamento reunidos no roteiro.','Modo Estrada: sugestões de rotas panorâmicas, campings e paradas pelo caminho.','Comparar com agências: ver pacotes de agências parceiras no mesmo local.']},
-  {q:'Depois de realizar uma viagem, você teria interesse em compartilhar seu roteiro para ajudar outras pessoas a planejar viagens semelhantes?',multi:false,o:['Sim, compartilharia o roteiro completo.','Sim, compartilharia apenas algumas dicas e informações.','Talvez, dependendo da facilidade para publicar.','Prefiro apenas consultar roteiros de outras pessoas.']}
-];
-
-const state = {
-  step: 0,
-  id: Date.now().toString(36) + Math.random().toString(36).slice(2, 8),
-  answers: Q.map(() => ({sel: [], outro: ''})),
-  phone: '', consent: false
+const $ = id => document.getElementById(id);
+const money = n => Number(n).toLocaleString('pt-BR', {style:'currency', currency:'BRL'});
+const store = {
+  get(k, f){ try { const v = JSON.parse(localStorage.getItem(k)); return v === null || v === undefined ? f : v; } catch(e){ return f; } },
+  set(k, v){ try { localStorage.setItem(k, JSON.stringify(v)); } catch(e){} }
 };
 
-const app = document.getElementById('app');
+const MENU = [['inicio','⌂','Início'],['destinos','⌕','Destinos'],['descobrir','✦','Descobrir'],['gastos','＄','Gastos']];
 
-function h(tag, props = {}, ...kids) {
-  const el = document.createElement(tag);
-  for (const [k, v] of Object.entries(props)) {
-    if (k === 'class') el.className = v;
-    else if (k.startsWith('on')) el.addEventListener(k.slice(2), v);
-    else if (k in el) el[k] = v;
-    else el.setAttribute(k, v);
+const DESTS = [
+  {id:1,name:'Gramado',country:'Brasil',kind:'Cultura',desc:'Gastronomia, arquitetura e paisagens da Serra Gaúcha.',img:'https://images.unsplash.com/photo-1519681393784-d120267933ba?w=800&q=80'},
+  {id:2,name:'Florianópolis',country:'Brasil',kind:'Natureza',desc:'Praias, trilhas e passeios para todas as estações.',img:'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&q=80'},
+  {id:3,name:'Santiago',country:'Chile',kind:'Cultura',desc:'Cultura urbana e experiências entre montanhas.',img:'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=800&q=80'},
+  {id:4,name:'Lisboa',country:'Portugal',kind:'Cultura',desc:'Bairros históricos, mirantes e culinária.',img:'https://images.unsplash.com/photo-1555881400-74d7acaacd8b?w=800&q=80'},
+  {id:5,name:'Bariloche',country:'Argentina',kind:'Natureza',desc:'Lagos, montanhas e aventuras ao ar livre.',img:'https://images.unsplash.com/photo-1470770841072-f978cf4d019e?w=800&q=80'},
+  {id:6,name:'Serra do Rio do Rastro',country:'Brasil',kind:'Estrada',desc:'Curvas e mirantes icônicos para viajar de carro.',img:'https://images.unsplash.com/photo-1500534623283-312aade485b7?w=800&q=80'}
+];
+
+// ---------- Navegação ----------
+function go(page){
+  document.querySelectorAll('.page').forEach(x => x.classList.toggle('active', x.id === page));
+  document.querySelectorAll('[data-page]').forEach(x => x.classList.toggle('active', x.dataset.page === page));
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+// ---------- Destinos ----------
+function card(d){
+  return `<article class="card"><img src="${d.img}" alt="Imagem ilustrativa de ${d.name}" loading="lazy"><div class="card-body"><span class="pill">${d.kind}</span><h3 style="margin-top:10px">${d.name}</h3><span class="small">${d.country}</span><p>${d.desc}</p><button class="btn alt" data-want="${d.id}">Quero algo assim →</button></div></article>`;
+}
+function bindWant(root){
+  root.querySelectorAll('[data-want]').forEach(b => b.addEventListener('click', () => {
+    const d = DESTS.find(x => x.id === +b.dataset.want);
+    if (d && !data['Destino dos sonhos'].trim()) data['Destino dos sonhos'] = d.name;
+    if (!doneShown) renderStep();
+    go('descobrir');
+  }));
+}
+function filterDest(){
+  const q = $('searchDest').value.toLowerCase().trim(), t = $('typeDest').value;
+  const arr = DESTS.filter(d => (d.name+' '+d.country+' '+d.desc).toLowerCase().includes(q) && (!t || d.kind === t));
+  $('resultCount').textContent = arr.length + ' destino(s)';
+  $('destCards').innerHTML = arr.length ? arr.map(card).join('') : '<div class="empty">Nenhum destino encontrado. Experimente outra busca.</div>';
+  bindWant($('destCards'));
+}
+
+// ---------- Formulário ----------
+const STEPS = [
+  {title:'Sobre a viagem', fields:[
+    {k:'Quando', label:'Quando pretende viajar?', t:'chips', o:['No próximo mês','Em 2 a 3 meses','Em 4 a 6 meses','Daqui a mais de 6 meses','Ainda não sei']},
+    {k:'Dias', label:'Quantos dias de viagem?', t:'chips', o:['1 a 2 dias','3 a 5 dias','6 a 9 dias','10 dias ou mais']},
+    {k:'Saída de', label:'De qual cidade/UF você sai?', t:'text', ph:'Ex.: Criciúma/SC'}
+  ]},
+  {title:'Seu perfil', fields:[
+    {k:'Com quem', label:'Com quem você vai viajar?', t:'chips', o:['Sozinho(a)','Casal','Família com crianças','Família sem crianças','Amigos']},
+    {k:'Orçamento por pessoa', label:'Orçamento aproximado por pessoa', t:'chips', o:['Até R$ 1.000','R$ 1.000 a 3.000','R$ 3.000 a 6.000','R$ 6.000 a 10.000','Acima de R$ 10.000']},
+    {k:'Nacional/internacional', label:'Nacional ou internacional?', t:'chips', o:['Brasil','Exterior','Tanto faz']},
+    {k:'Transporte', label:'Como prefere ir?', t:'chips', o:['Carro','Avião','Ônibus','Tanto faz']},
+    {k:'Ritmo', label:'Qual ritmo de viagem você prefere?', t:'chips', o:['Tranquilo','Equilibrado','Agitado']}
+  ]},
+  {title:'Seu gosto', fields:[
+    {k:'Experiências', label:'O que você mais quer da viagem? (escolha até 3)', t:'chips', multi:3, o:['Praia','Natureza e aventura','Cidade e cultura','Gastronomia','Descanso','Festa e vida noturna']},
+    {k:'Já foi / evitar', label:'Onde você já foi ou quer evitar? (opcional)', t:'area', opt:true, ph:'Ex.: já fui a Gramado, não gosto de lugares muito cheios'},
+    {k:'Destino dos sonhos', label:'Tem algum destino dos sonhos? (opcional)', t:'text', opt:true, ph:'Ex.: Patagônia'}
+  ]},
+  {title:'Para onde enviamos?', fields:[
+    {k:'Nome', label:'Seu nome', t:'text', ph:'Como podemos te chamar?'},
+    {k:'E-mail', label:'E-mail', t:'text', itype:'email', opt:true, ph:'voce@email.com'},
+    {k:'WhatsApp', label:'WhatsApp', t:'text', itype:'tel', opt:true, ph:'(00) 00000-0000'}
+  ]}
+];
+
+const data = {consent:false, hp:''};
+let step = 0, doneShown = false;
+const sessionId = Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
+function resetData(){
+  STEPS.forEach(s => s.fields.forEach(f => data[f.k] = f.multi ? [] : ''));
+  data.consent = false; data.hp = '';
+}
+resetData();
+
+function valid(){
+  const s = STEPS[step];
+  for (const f of s.fields){
+    if (f.opt) continue;
+    const v = data[f.k];
+    if (f.multi ? v.length < 1 : !String(v).trim()) return false;
   }
-  kids.flat().filter(c => c !== null && c !== undefined).forEach(c => el.append(c));
-  return el;
+  if (step === STEPS.length - 1){
+    const em = data['E-mail'].trim(), ph = data['WhatsApp'].trim();
+    const emOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em);
+    const n = ph.replace(/\D/g, '').length, phOk = n >= 10 && n <= 13;
+    if (!emOk && !phOk) return false;
+    if (em && !emOk) return false;
+    if (ph && !phOk) return false;
+    if (!data.consent) return false;
+  }
+  return true;
+}
+function refresh(){ $('btnNext').disabled = !valid(); }
+
+function buildField(f){
+  const wrap = document.createElement('div'); wrap.className = 'field';
+  const lab = document.createElement('div'); lab.className = 'lbl'; lab.textContent = f.label; wrap.append(lab);
+  if (f.t === 'chips'){
+    const box = document.createElement('div'); box.className = 'chips';
+    const isOn = o => f.multi ? data[f.k].includes(o) : data[f.k] === o;
+    f.o.forEach(o => {
+      const b = document.createElement('button'); b.type = 'button'; b.className = 'chip' + (isOn(o) ? ' on' : ''); b.textContent = o;
+      b.addEventListener('click', () => {
+        if (f.multi){
+          const a = data[f.k];
+          if (a.includes(o)) data[f.k] = a.filter(x => x !== o);
+          else if (a.length < f.multi) data[f.k] = [...a, o];
+        } else data[f.k] = o;
+        box.querySelectorAll('.chip').forEach(c => c.classList.toggle('on', isOn(c.textContent)));
+        refresh();
+      });
+      box.append(b);
+    });
+    wrap.append(box);
+  } else {
+    const inp = document.createElement(f.t === 'area' ? 'textarea' : 'input');
+    inp.className = 'input'; inp.placeholder = f.ph || ''; inp.value = data[f.k]; inp.maxLength = 300;
+    if (f.itype) inp.type = f.itype;
+    inp.addEventListener('input', () => { data[f.k] = inp.value; refresh(); });
+    wrap.append(inp);
+  }
+  return wrap;
 }
 
-function send(payload) {
-  if (!API_URL || API_URL.startsWith('COLE_AQUI')) { console.warn('API_URL não configurada', payload); return; }
-  fetch(API_URL, {
-    method: 'POST', mode: 'no-cors',
-    headers: {'Content-Type': 'text/plain;charset=utf-8'},
-    body: JSON.stringify(payload)
-  }).catch(() => {});
+function renderStep(){
+  const s = STEPS[step], last = step === STEPS.length - 1;
+  $('stepLabel').textContent = `Etapa ${step + 1} de ${STEPS.length} • ${s.title}`;
+  $('bar').style.width = ((step + 1) / STEPS.length * 100) + '%';
+  const body = $('formBody'); body.innerHTML = '';
+  s.fields.forEach(f => body.append(buildField(f)));
+  if (last){
+    const hint = document.createElement('p'); hint.className = 'small'; hint.style.marginTop = '-10px';
+    hint.textContent = 'Informe e-mail ou WhatsApp (pelo menos um).'; body.append(hint);
+    const c = document.createElement('label'); c.className = 'consent';
+    c.innerHTML = '<input type="checkbox"><span>Autorizo receber a sugestão de destino por esse contato e o uso dos meus dados apenas para esse fim. Os dados não são vendidos nem compartilhados.</span>';
+    const cb = c.querySelector('input'); cb.checked = data.consent;
+    cb.addEventListener('change', () => { data.consent = cb.checked; refresh(); });
+    body.append(c);
+    const hp = document.createElement('input'); hp.className = 'hp'; hp.tabIndex = -1; hp.autocomplete = 'off'; hp.setAttribute('aria-hidden', 'true'); hp.value = data.hp;
+    hp.addEventListener('input', () => { data.hp = hp.value; });
+    body.append(hp);
+  }
+  $('btnBack').classList.toggle('hidden', step === 0);
+  $('btnNext').textContent = last ? 'Enviar e receber minha sugestão' : 'Continuar';
+  $('formErr').innerHTML = '';
+  refresh();
 }
 
-function formatAnswers() {
-  return Q.map((d, i) => {
-    const a = state.answers[i];
-    return a.sel.map(k => d.o[k] === 'Outro' ? 'Outro: ' + a.outro.trim() : d.o[k]).join('; ');
+async function submitForm(){
+  const btn = $('btnNext');
+  btn.disabled = true; btn.textContent = 'Enviando...'; $('formErr').innerHTML = '';
+  if (!data.hp){
+    const fields = {};
+    Object.keys(data).forEach(k => {
+      if (k === 'consent' || k === 'hp') return;
+      fields[k] = Array.isArray(data[k]) ? data[k].join('; ') : String(data[k]).trim();
+    });
+    fields['Consentimento'] = 'sim';
+    try {
+      await fetch(API_URL, {method:'POST', mode:'no-cors', headers:{'Content-Type':'text/plain;charset=utf-8'}, body: JSON.stringify({action:'create', id:sessionId, fields})});
+    } catch(e){
+      $('formErr').innerHTML = '<div class="err">Não foi possível enviar agora. Verifique sua conexão e tente novamente.</div>';
+      btn.textContent = 'Enviar e receber minha sugestão'; refresh(); return;
+    }
+  }
+  showDone();
+}
+
+function showDone(){
+  doneShown = true;
+  const via = [data['E-mail'].trim() && 'e-mail', data['WhatsApp'].trim() && 'WhatsApp'].filter(Boolean).join(' e ');
+  $('doneText').textContent = `Obrigado, ${data['Nome'].trim()}! Vamos analisar o seu perfil e enviar a sugestão por ${via} em até 48 horas.`;
+  $('formArea').classList.add('hidden'); $('doneArea').classList.remove('hidden');
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+// ---------- Gastos ----------
+const EXPENSES = [['Transporte',950],['Hospedagem',1200],['Alimentação',480],['Passeios',350],['Outros',220]];
+function getBudget(){ return EXPENSES.map(([name], i) => ({name, value: Math.max(0, Number($('cost'+i).value) || 0)})); }
+function calcBudget(){
+  const items = getBudget(), total = items.reduce((a, b) => a + b.value, 0);
+  $('budgetTotal').textContent = money(total);
+  $('budgetDetails').textContent = items.map(v => `${v.name}: ${money(v.value)}`).join(' • ');
+}
+
+// ---------- Início ----------
+function init(){
+  $('nav').innerHTML = MENU.map(([id, icon, name]) => `<button data-page="${id}" class="${id === 'inicio' ? 'active' : ''}">${icon} &nbsp; ${name}</button>`).join('');
+  $('mobileNav').innerHTML = MENU.map(([id, icon, name]) => `<button data-page="${id}" class="${id === 'inicio' ? 'active' : ''}">${icon}<br>${name}</button>`).join('');
+  document.querySelectorAll('[data-page]').forEach(b => b.addEventListener('click', () => go(b.dataset.page)));
+  document.querySelectorAll('[data-go]').forEach(b => b.addEventListener('click', () => go(b.dataset.go)));
+
+  $('homeCards').innerHTML = DESTS.slice(0, 3).map(card).join(''); bindWant($('homeCards'));
+  $('typeDest').addEventListener('change', filterDest); $('searchDest').addEventListener('input', filterDest); filterDest();
+
+  $('btnBack').addEventListener('click', () => { if (step > 0){ step--; renderStep(); window.scrollTo({top:0, behavior:'smooth'}); } });
+  $('btnNext').addEventListener('click', () => {
+    if (!valid()) return;
+    if (step < STEPS.length - 1){ step++; renderStep(); window.scrollTo({top:0, behavior:'smooth'}); }
+    else submitForm();
+  });
+  $('btnAgain').addEventListener('click', () => {
+    resetData(); step = 0; doneShown = false;
+    $('doneArea').classList.add('hidden'); $('formArea').classList.remove('hidden'); renderStep();
+  });
+  renderStep();
+
+  $('budgetFields').innerHTML = EXPENSES.map(([name, value], i) => `<div class="cost-row"><label for="cost${i}" style="margin:0">${name}</label><input id="cost${i}" type="number" min="0" step="10" class="input" value="${value}"></div>`).join('');
+  EXPENSES.forEach((e, i) => $('cost'+i).addEventListener('input', calcBudget));
+  const saved = store.get('horizonte-budget', null);
+  if (saved && Array.isArray(saved.values) && saved.values.length === EXPENSES.length){
+    $('tripName').value = saved.name || ''; saved.values.forEach((x, i) => $('cost'+i).value = x);
+  }
+  calcBudget();
+  $('btnSave').addEventListener('click', () => {
+    store.set('horizonte-budget', {name:$('tripName').value, values:getBudget().map(x => x.value)});
+    $('budgetStatus').innerHTML = '<div class="feedback">Orçamento salvo neste navegador.</div>';
+  });
+  $('btnReset').addEventListener('click', () => {
+    EXPENSES.forEach((e, i) => $('cost'+i).value = e[1]); $('tripName').value = 'Minha próxima aventura'; calcBudget(); $('budgetStatus').innerHTML = '';
   });
 }
-
-function go(step) { state.step = step; render(); window.scrollTo(0, 0); }
-
-function intro() {
-  return [
-    h('div', {class: 'brand'}, 'Roteiros'),
-    h('div', {class: 'spacer'}),
-    h('h1', {}, 'Pesquisa de preferências: tendências e frequências de viagens'),
-    h('p', {}, 'Leva cerca de 2 minutos. São 9 perguntas rápidas sobre como você planeja suas viagens.'),
-    h('div', {class: 'note'},
-      h('b', {}, 'Transparência'),
-      h('span', {}, 'Usamos suas respostas apenas para validação e estudo de produto, de forma agregada. Sua participação é voluntária. Ao final, você pode (se quiser) deixar seu WhatsApp para receber um roteiro de teste; esse número só será usado para isso.')),
-    h('div', {class: 'spacer'}),
-    h('button', {class: 'btn', onclick: () => go(1)}, 'Começar')
-  ];
-}
-
-function question(i) {
-  const d = Q[i], a = state.answers[i];
-  const outroIdx = d.o.indexOf('Outro');
-  const outroOn = () => outroIdx >= 0 && a.sel.includes(outroIdx);
-  const btn = h('button', {class: 'btn', onclick: () => {
-    if (i === 8) send({action: 'create', id: state.id, answers: formatAnswers()});
-    go(i + 2);
-  }}, i === 8 ? 'Concluir' : 'Continuar');
-  const refresh = () => { btn.disabled = !(a.sel.length > 0 && (!outroOn() || a.outro.trim())); };
-
-  const opts = h('div', {class: 'opts'}, d.o.map((label, k) => {
-    const on = a.sel.includes(k);
-    return h('button', {type: 'button', class: 'opt' + (on ? ' on' : '') + (d.multi ? ' multi' : ''), onclick: () => {
-      if (d.multi) a.sel = on ? a.sel.filter(x => x !== k) : [...a.sel, k];
-      else a.sel = [k];
-      render();
-      if (k === outroIdx && a.sel.includes(k)) setTimeout(() => app.querySelector('input.field')?.focus());
-    }}, h('span', {class: 'ind'}), h('span', {}, label));
-  }));
-
-  const outroField = outroOn()
-    ? h('input', {class: 'field', type: 'text', placeholder: 'Conte para a gente', value: a.outro, oninput: e => { a.outro = e.target.value; refresh(); }})
-    : null;
-
-  refresh();
-  return [
-    h('div', {class: 'top'},
-      h('span', {}, `Pergunta ${i + 1} de 9`),
-      h('button', {class: 'link', onclick: () => go(i)}, 'Voltar')),
-    h('div', {class: 'bar'}, h('i', {style: `width:${((i + 1) / 9) * 100}%`})),
-    h('h2', {}, d.q),
-    h('p', {class: 'small'}, d.multi ? 'Escolha quantas quiser' : 'Escolha uma opção'),
-    opts, outroField,
-    h('div', {class: 'spacer'}),
-    btn
-  ];
-}
-
-function finalScreen() {
-  const btn = h('button', {class: 'btn orange', disabled: true, onclick: () => {
-    send({action: 'contact', id: state.id, whatsapp: state.phone.trim(), consent: 'sim'});
-    go(11);
-  }}, 'Quero receber');
-  const check = () => {
-    const n = state.phone.replace(/\D/g, '').length;
-    btn.disabled = !(n >= 10 && n <= 13 && state.consent);
-  };
-  return [
-    h('div', {class: 'brand'}, 'Roteiros'),
-    h('div', {class: 'spacer'}),
-    h('h1', {}, 'Obrigado! Quer um roteiro de teste?'),
-    h('p', {}, 'Estamos montando, manualmente, roteiros sob medida para validar nossa ideia. Deixe seu WhatsApp e enviamos um roteiro pensado para o seu perfil de viagem. É opcional.'),
-    h('input', {class: 'field', type: 'tel', placeholder: 'WhatsApp: (00) 00000-0000', autocomplete: 'tel', oninput: e => { state.phone = e.target.value; check(); }}),
-    h('label', {class: 'check'},
-      h('input', {type: 'checkbox', onchange: e => { state.consent = e.target.checked; check(); }}),
-      h('span', {}, 'Autorizo receber o roteiro de teste pelo WhatsApp e o uso do meu número apenas para esse fim.')),
-    h('div', {class: 'spacer'}),
-    btn,
-    h('button', {class: 'link', onclick: () => go(11)}, 'Agora não')
-  ];
-}
-
-function thanks() {
-  const comContato = state.phone.trim() && state.consent;
-  return [
-    h('div', {class: 'brand'}, 'Roteiros'),
-    h('div', {class: 'spacer'}),
-    h('h1', {}, 'Tudo certo, obrigado!'),
-    h('p', {}, comContato
-      ? 'Vamos montar seu roteiro de teste e enviar pelo WhatsApp em até 48 horas.'
-      : 'Suas respostas foram registradas. Obrigado por ajudar a melhorar o planejamento de viagens.'),
-    h('div', {class: 'spacer'})
-  ];
-}
-
-function render() {
-  app.replaceChildren();
-  const s = state.step;
-  const nodes = s === 0 ? intro() : s <= 9 ? question(s - 1) : s === 10 ? finalScreen() : thanks();
-  app.append(...nodes.filter(Boolean));
-}
-
-render();
-</script>
-</body>
-</html>
+init();
+</script></body></html>
