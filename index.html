@@ -1,202 +1,917 @@
 <!doctype html>
-<html lang="pt-BR"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#123f45"><title>Horizonte — Descubra sua próxima viagem</title><style>
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap');
-:root{--ink:#16363c;--teal:#176e6d;--accent:#ed8755;--pale:#eaf5f2;--line:#dce8e5;--muted:#688080;--bg:#f7faf8;--shadow:0 12px 36px #16363c12}
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#f46b36">
+<title>Viage — sua viagem começa aqui</title>
+<link rel="preconnect" href="https://images.unsplash.com">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+<style>
+/* ===== Base ===== */
+:root{
+  --orange:#f46b36; --orange-dark:#d94c20;
+  --green:#227e59;  --green-dark:#185f46;
+  --cream:#fff9f1;  --ink:#29362e; --muted:#69776e;
+  --line:#e9e5dd;   --surface:#fff;
+  --shadow:0 14px 36px #352c1e12;
+}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);font-family:'DM Sans',Arial,sans-serif;color:var(--ink)}
-button,input,select,textarea{font:inherit}button{cursor:pointer}
-h1,h2,h3,h4{font-family:Outfit,Arial,sans-serif;margin:0}p{line-height:1.55}
-.shell{display:grid;grid-template-columns:245px minmax(0,1fr);min-height:100vh}
-.side{background:#103f43;color:white;padding:28px 18px;position:sticky;top:0;height:100vh;display:flex;flex-direction:column}
-.brand{display:flex;align-items:center;gap:10px;padding:5px 10px 32px;font:800 27px Outfit;letter-spacing:-1px}
-.brand i{background:#e8a271;color:#163c40;width:35px;height:35px;border-radius:12px;display:grid;place-items:center;font-style:normal;font-size:20px}
-.nav{display:flex;flex-direction:column;gap:6px}
-.nav button{border:0;background:transparent;color:#c5dcda;text-align:left;padding:13px 14px;border-radius:13px;font-weight:700}
-.nav button.active,.nav button:hover{background:#ffffff1d;color:white}
-.side-note{margin-top:auto;border:1px solid #ffffff38;padding:15px;border-radius:15px;font-size:12px;color:#d2e9e4;line-height:1.6}
-.main{min-width:0}
-.top{display:flex;align-items:center;justify-content:space-between;padding:20px 38px;background:#ffffffd9;border-bottom:1px solid var(--line)}
-.top strong{font-family:Outfit}
-.tag{border-radius:30px;background:#eff4f1;padding:8px 12px;color:var(--teal);font-size:12px;font-weight:800}
-.content{max-width:1100px;margin:auto;padding:30px 38px 70px}
-.page{display:none}.page.active{display:block}
-.hero{border-radius:24px;min-height:290px;padding:42px;background:linear-gradient(90deg,#103f43e8 0%,#103f43b6 45%,#103f4320 100%),url('https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=1500&q=85') center/cover;color:white;display:flex;align-items:center}
-.hero h1{font-size:clamp(30px,4vw,50px);line-height:1.07;max-width:540px}
-.hero p{max-width:450px;color:#ecf6f0}
-.eyebrow{text-transform:uppercase;font-size:12px;letter-spacing:2.5px;font-weight:800;color:#f5bb85;margin-bottom:12px}
-.section-title{margin:31px 0 18px}.section-title h2{font-size:27px}.section-title p{color:var(--muted);margin:5px 0 0}
-.cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
-.card{overflow:hidden;background:white;border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow)}
-.card img{width:100%;height:168px;object-fit:cover;display:block}
-.card-body{padding:17px}.card h3{font-size:20px}.card p{font-size:14px}
-.small{font-size:13px;color:var(--muted)}
-.pill{display:inline-block;background:var(--pale);color:var(--teal);border-radius:20px;padding:5px 9px;font-size:11px;font-weight:800}
-.btn{border:0;border-radius:11px;background:var(--teal);color:white;padding:12px 18px;font-weight:800}
-.btn:hover{filter:brightness(.92)}
-.btn.alt{background:#edf5f1;color:var(--teal)}
-.btn.orange{background:var(--accent);color:#2a3935}
+html{scroll-behavior:smooth}
+body{margin:0;background:#faf9f5;color:var(--ink);font:15px 'DM Sans',Arial,sans-serif}
+button,input,select,textarea{font:inherit}
+button{cursor:pointer}
+button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid #247e60;outline-offset:2px}
+h1,h2,h3{font-family:Outfit,Arial,sans-serif;margin:0;line-height:1.14;letter-spacing:-.035em}
+p{line-height:1.6}
+small,.muted{color:var(--muted)}
+.hidden{display:none!important}
+
+/* ===== Layout e navegação ===== */
+.shell{max-width:1330px;padding:0 26px;margin:auto}
+.topbar{background:#fff;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:10}
+.top-inner{min-height:78px;display:flex;align-items:center;justify-content:space-between;gap:18px}
+.brand{display:flex;gap:11px;align-items:center;font:900 30px Outfit;letter-spacing:-.045em;color:var(--orange-dark);cursor:pointer}
+.logo{width:42px;height:42px;background:var(--orange);color:#fff;border-radius:14px 14px 14px 4px;display:grid;place-items:center;font-size:26px;transform:rotate(-6deg)}
+.logo span{transform:rotate(6deg)}
+.nav{display:flex;align-items:center;gap:5px;flex-wrap:wrap}
+.nav button{border:0;background:transparent;color:#48564d;padding:11px 13px;border-radius:11px;font-weight:800}
+.nav button.active,.nav button:hover{color:var(--green-dark);background:#eaf4eb}
+
+/* ===== Botões e etiquetas ===== */
+.btn{border:0;border-radius:13px;padding:12px 18px;font-weight:800;background:var(--orange);color:#fff;display:inline-flex;gap:8px;justify-content:center;align-items:center;min-height:45px}
+.btn:hover{background:var(--orange-dark)}
+.btn.green{background:var(--green)}
+.btn.green:hover{background:var(--green-dark)}
+.btn.light{background:#f2f3ee;color:var(--ink)}
+.btn.outline{background:#fff;color:var(--green);border:1px solid #bad8c6}
+.btn.small{padding:9px 12px;min-height:37px;font-size:13px}
 .btn:disabled{opacity:.45;cursor:not-allowed}
-.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.spread{justify-content:space-between}
-.input{border:1px solid #d7e4e0;border-radius:11px;padding:12px 13px;background:white;min-width:0;color:var(--ink);width:100%}
-.input:focus{outline:2px solid #176e6d55;border-color:var(--teal)}
-textarea.input{min-height:84px;resize:vertical}
-label,.lbl{font-weight:800;font-size:14px;display:block;margin-bottom:8px}
-.filter{display:grid;grid-template-columns:2fr 1fr;gap:12px;padding:18px;background:white;border:1px solid var(--line);border-radius:17px}
-.heading{margin:4px 0 25px}.heading h1{font-size:35px}.heading p{color:var(--muted);margin:6px 0}
-.layout2{display:grid;grid-template-columns:1.3fr 1fr;gap:20px}
-.panel{background:white;border:1px solid var(--line);border-radius:18px;padding:22px;box-shadow:var(--shadow)}
-.panel h3{font-size:22px;margin-bottom:14px}
-.steps3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:22px}
-.stepbox{background:white;border:1px solid var(--line);border-radius:16px;padding:18px}
-.stepbox b{display:grid;place-items:center;width:32px;height:32px;border-radius:50%;background:var(--pale);color:var(--teal);font-family:Outfit;margin-bottom:10px}
-.stepbox span{font-size:14px;color:var(--muted)}
-.notice{font-size:12px;background:#fff5e9;border:1px solid #f6dbb6;border-radius:10px;padding:11px;color:#74552e;margin:14px 0;line-height:1.5}
-.bar{height:6px;border-radius:3px;background:var(--pale);overflow:hidden;margin:8px 0 22px}
-.bar i{display:block;height:100%;background:var(--accent);transition:width .25s}
-.field{margin-bottom:22px}
+.pill{display:inline-flex;align-items:center;padding:7px 11px;border-radius:99px;background:#fff0e5;color:#b84d27;font-weight:800;font-size:12px}
+.pill.green{color:#176344;background:#e4f3e8}
+
+/* ===== Seções, grades e cartões ===== */
+.section{padding:31px 0 20px}
+.sec-head{display:flex;justify-content:space-between;align-items:end;gap:16px;margin-bottom:18px}
+.sec-head h2{font-size:29px}
+.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:17px}
+.grid.three{grid-template-columns:repeat(3,minmax(0,1fr))}
+.card{background:#fff;border:1px solid var(--line);border-radius:20px;overflow:hidden;box-shadow:0 3px 12px #302e2006}
+.card-body{padding:16px}
+.card h3{font-size:19px;margin:5px 0}
+.card p{font-size:13px;color:var(--muted);margin:6px 0 13px}
+.card-actions{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:12px}
+.photo{width:100%;height:175px;object-fit:cover;display:block;background:#e9e8dc}
+.photo.large{height:240px}
+.price{font-size:18px;font-weight:900;color:var(--green-dark)}
+.badge-price{background:#fff9ed;border-radius:9px;padding:8px 10px;font-weight:900;color:#af5c2d}
+
+/* ===== Hero ===== */
+.hero{margin-top:22px;display:grid;grid-template-columns:1.05fr .95fr;border-radius:28px;overflow:hidden;background:#ffede0;min-height:360px}
+.hero-copy{padding:45px 47px;display:flex;flex-direction:column;align-items:flex-start;justify-content:center}
+.hero h1{font-size:clamp(34px,4.5vw,61px);max-width:580px}
+.hero p{font-size:17px;max-width:500px}
+.hero img{height:100%;width:100%;object-fit:cover;max-height:430px}
+.hero-actions{display:flex;gap:9px;flex-wrap:wrap}
+
+/* ===== Formulários e filtros ===== */
+.input,select,textarea{width:100%;border:1px solid #dcded7;border-radius:12px;background:#fff;padding:12px;color:var(--ink);min-height:45px}
+textarea{min-height:84px;resize:vertical}
+label{font-size:13px;font-weight:800;display:block;margin-bottom:7px}
+.filters{background:#fff;border:1px solid var(--line);padding:16px;border-radius:19px;display:flex;gap:12px;align-items:end;flex-wrap:wrap}
+.filter-item{flex:1;min-width:145px}
+.field{margin:14px 0}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.helper{font-size:12px;color:var(--muted)}
+.note{padding:14px 17px;background:#f1f7ed;border-left:4px solid var(--green);color:#43614d;border-radius:10px;margin:17px 0;font-size:13px}
+
+/* ===== Blocos de conteúdo ===== */
+.two-col{display:grid;grid-template-columns:minmax(0,1fr) 315px;gap:23px}
+.sidebox{background:#fff;border:1px solid var(--line);padding:19px;border-radius:20px;position:sticky;top:95px;align-self:start}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin:16px 0}
+.tabs button{border:1px solid #dfe5dc;border-radius:99px;padding:10px 15px;background:#fff;font-weight:800}
+.tabs button.active{background:var(--green);color:#fff;border-color:var(--green)}
+.timeline{border-left:3px solid #d8eadb;margin-left:10px;padding-left:24px}
+.event{position:relative;background:#fff;border:1px solid var(--line);border-radius:15px;padding:14px;margin:12px 0}
+.event:before{content:'';position:absolute;top:20px;left:-33px;width:14px;height:14px;border-radius:50%;background:var(--orange);border:3px solid #fff;box-shadow:0 0 0 2px var(--orange)}
+.event-title{font-size:16px;font-weight:900}
+.dayline{font-weight:900;color:var(--green);margin-top:24px;margin-bottom:8px}
+.item-list{display:grid;gap:13px}
+.list-card{display:flex;background:#fff;border:1px solid var(--line);border-radius:18px;overflow:hidden;min-height:150px}
+.list-card img{width:195px;object-fit:cover;background:#eee}
+.list-card .card-body{flex:1}
+.stack{display:flex;flex-wrap:wrap;align-items:center;gap:9px}
+.empty{border:1px dashed #cdd8ce;border-radius:19px;padding:38px 20px;text-align:center;color:var(--muted);background:#fff}
+.banner{padding:23px;background:#e9f3e8;border-radius:21px}
+.banner h2{font-size:27px}
+.community{background:linear-gradient(135deg,#f5f5e8,#fdf1e5);border-radius:23px;padding:25px}
+.wizard-card{padding:24px;background:#fff;border-radius:22px;border:1px solid var(--line)}
+.footer{margin-top:45px;border-top:1px solid var(--line);padding:22px 0 35px;font-size:12px;color:var(--muted)}
+.toast{position:fixed;right:20px;bottom:20px;z-index:55;background:#205d45;color:#fff;padding:14px 20px;border-radius:13px;box-shadow:var(--shadow)}
+
+/* ===== Modal ===== */
+.modal-back{position:fixed;inset:0;background:#18251ac2;z-index:31;display:flex;align-items:center;justify-content:center;padding:18px}
+.modal{max-height:90vh;overflow:auto;background:#fff;border-radius:23px;width:min(590px,100%);box-shadow:0 24px 80px #0003;padding:25px}
+.modal h2{font-size:27px;margin-bottom:8px}
+
+/* ===== Apresentação inicial ===== */
+.intro{position:fixed;inset:0;z-index:40;background:var(--orange);color:#fff;display:flex;align-items:center;justify-content:center;padding:26px;overflow:auto}
+.intro-content{max-width:950px;width:100%;display:grid;grid-template-columns:1.1fr .9fr;gap:45px;align-items:center}
+.intro h1{font-size:clamp(37px,5vw,68px)}
+.intro p{font-size:18px;max-width:560px}
+.intro-art{border-radius:35px;overflow:hidden;box-shadow:0 30px 80px #4315002b}
+.intro-art img{height:390px;width:100%;object-fit:cover;display:block}
+.intro .btn{background:#fff;color:var(--orange-dark)}
+.intro .btn.light{background:#ffffff2c;color:#fff;border:1px solid #fff9}
+.steps{display:flex;gap:7px;margin:24px 0}
+.steps i{width:28px;height:6px;border-radius:8px;background:#ffffff6b}
+.steps i.active{background:#fff}
+
+/* ===== Formulário "Me ajude a escolher" ===== */
+.progress{height:6px;border-radius:3px;background:#e4f3e8;overflow:hidden;margin:8px 0 22px}
+.progress i{display:block;height:100%;background:var(--orange);transition:width .25s}
 .chips{display:flex;flex-wrap:wrap;gap:8px}
-.chip{border:1.5px solid var(--line);background:#fff;border-radius:30px;padding:10px 14px;font-weight:600;font-size:14px;color:var(--ink)}
-.chip.on{background:var(--teal);color:#fff;border-color:var(--teal)}
+.chip{border:1.5px solid #dfe5dc;background:#fff;border-radius:99px;padding:10px 14px;font-weight:700;color:var(--ink)}
+.chip.on{background:var(--green);border-color:var(--green);color:#fff}
 .consent{display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--muted);line-height:1.5;font-weight:400}
-.consent input{margin-top:3px;accent-color:var(--teal)}
+.consent input{width:auto;min-height:0;margin-top:3px;accent-color:var(--green)}
 .hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
 .err{background:#fdecec;color:#8a2c2c;border-radius:10px;padding:10px 12px;font-size:13px;margin-top:12px}
-.cost-row{display:grid;grid-template-columns:1fr 150px;align-items:center;gap:16px;padding:11px 0;border-bottom:1px solid var(--line)}
-.total{font:800 32px Outfit;color:var(--teal)}
-.feedback{padding:12px;background:#e8f6ef;color:#1c634c;border-radius:10px;font-size:13px;margin-top:12px}
-.empty{text-align:center;padding:30px;color:var(--muted)}
-.mobilebar{display:none}
-.hidden{display:none!important}
-@media(max-width:950px){.shell{grid-template-columns:1fr}.side{display:none}.content{padding:22px 18px 100px}.top{padding:15px 18px}.mobilebar{display:flex;position:fixed;bottom:0;left:0;right:0;background:white;border-top:1px solid var(--line);justify-content:space-around;padding:7px 2px;z-index:5;box-shadow:0 -4px 25px #0000000c}.mobilebar button{font-size:11px;background:none;border:0;color:var(--muted);padding:8px 2px;font-weight:800}.mobilebar button.active{color:var(--teal)}.cards{grid-template-columns:repeat(2,minmax(0,1fr))}.layout2{grid-template-columns:1fr}.steps3{grid-template-columns:1fr}}
-@media(max-width:580px){.cards{grid-template-columns:1fr}.filter{grid-template-columns:1fr}.hero{min-height:310px;padding:24px}.hero h1{font-size:34px}.cost-row{grid-template-columns:1fr 115px}.heading h1{font-size:29px}.tag{display:none}}
-</style></head><body>
-<div class="shell">
-<aside class="side"><div class="brand"><i>✦</i> horizonte</div><nav class="nav" id="nav"></nav>
-<div class="side-note"><b>Piloto</b><br>As sugestões de destino são montadas manualmente pela nossa equipe. Seu contato só é usado para enviar a sugestão.</div></aside>
-<div class="main">
-<header class="top"><strong>✦ Descubra seu próximo caminho</strong><span class="tag">PILOTO • SUGESTÕES FEITAS À MÃO</span></header>
-<main class="content">
 
-<section id="inicio" class="page active">
-  <div class="hero"><div>
-    <div class="eyebrow">Sua próxima viagem</div>
-    <h1>Conte como você gosta de viajar. Nós sugerimos o destino.</h1>
-    <p>Responda algumas perguntas rápidas e receba uma sugestão pensada para o seu perfil.</p>
-    <button class="btn orange" data-go="descobrir">Descobrir minha viagem →</button>
-  </div></div>
-  <div class="section-title"><h2>Como funciona</h2></div>
-  <div class="steps3">
-    <div class="stepbox"><b>1</b><h3>Conte seu jeito</h3><span>Cerca de 1 minuto de perguntas sobre época, orçamento e gostos.</span></div>
-    <div class="stepbox"><b>2</b><h3>Nossa equipe analisa</h3><span>A sugestão é montada manualmente, olhando o seu perfil com cuidado.</span></div>
-    <div class="stepbox"><b>3</b><h3>Você recebe</h3><span>Enviamos o destino ideal por e-mail ou WhatsApp em até 48 horas.</span></div>
-  </div>
-  <div class="section-title"><h2>Inspiração para viajar</h2><p>Alguns lugares para começar a sonhar.</p></div>
-  <div class="cards" id="homeCards"></div>
-</section>
-
-<section id="destinos" class="page">
-  <div class="heading"><h1>Explore destinos</h1><p>Pesquise um lugar e, se gostar, peça uma sugestão parecida.</p></div>
-  <div class="filter">
-    <div><label for="searchDest">Destino ou país</label><input class="input" id="searchDest" placeholder="Ex.: Gramado, Chile, praia..."></div>
-    <div><label for="typeDest">Estilo de viagem</label><select class="input" id="typeDest"><option value="">Todos</option><option>Natureza</option><option>Cultura</option><option>Estrada</option></select></div>
-  </div>
-  <div class="section-title"><h2>Resultados</h2><span class="small" id="resultCount"></span></div>
-  <div class="cards" id="destCards"></div>
-</section>
-
-<section id="descobrir" class="page">
-  <div class="heading"><h1>Descobrir minha viagem</h1><p>Responda em poucos passos. Depois, nossa equipe envia a sugestão.</p></div>
-  <div class="panel" style="max-width:720px">
-    <div id="formArea">
-      <div class="small" id="stepLabel"></div>
-      <div class="bar"><i id="bar"></i></div>
-      <div id="formBody"></div>
-      <div id="formErr"></div>
-      <div class="row spread" style="margin-top:8px">
-        <button class="btn alt" id="btnBack" type="button">← Voltar</button>
-        <button class="btn" id="btnNext" type="button">Continuar</button>
-      </div>
-    </div>
-    <div id="doneArea" class="hidden">
-      <h3>Recebemos o seu pedido! 🎉</h3>
-      <p id="doneText"></p>
-      <div class="notice">As sugestões são montadas manualmente pela nossa equipe, por isso levam até 48 horas.</div>
-      <button class="btn alt" id="btnAgain" type="button">Fazer outro pedido</button>
-    </div>
-  </div>
-</section>
-
-<section id="gastos" class="page">
-  <div class="heading"><h1>Planeje seus gastos</h1><p>Ajuste os valores da sua viagem para calcular o orçamento estimado.</p></div>
-  <div class="layout2">
-    <div class="panel"><h3>Simulador de orçamento</h3>
-      <label for="tripName">Nome da viagem</label><input id="tripName" class="input" value="Minha próxima aventura">
-      <div id="budgetFields"></div>
-      <button class="btn" id="btnSave" style="margin-top:18px">Salvar neste navegador</button>
-      <div id="budgetStatus"></div></div>
-    <div class="panel"><h3>Resumo da viagem</h3>
-      <p class="small">Valor total planejado</p><div class="total" id="budgetTotal">R$ 0,00</div>
-      <p id="budgetDetails" class="small"></p>
-      <div class="notice">Este orçamento é apenas uma estimativa sua. Não é uma cotação e não considera impostos, câmbio ou imprevistos.</div>
-      <button class="btn alt" id="btnReset">Restaurar valores de exemplo</button></div>
-  </div>
-</section>
-
-</main></div></div>
-<nav class="mobilebar" id="mobileNav"></nav>
+/* ===== Responsivo ===== */
+@media(max-width:950px){
+  .grid,.grid.three{grid-template-columns:repeat(2,1fr)}
+  .two-col{grid-template-columns:1fr}
+  .sidebox{position:static}
+  .nav button{padding:8px}
+  .hero-copy{padding:30px}
+  .intro-content{gap:15px}
+}
+@media(max-width:640px){
+  .shell{padding:0 15px}
+  .top-inner{min-height:65px;align-items:flex-start;padding:11px 0;flex-direction:column;gap:5px}
+  .brand{font-size:23px}
+  .logo{height:33px;width:33px;font-size:21px}
+  .nav{width:100%;overflow-x:auto;flex-wrap:nowrap;padding-bottom:5px}
+  .nav button{white-space:nowrap;font-size:12px}
+  .hero{grid-template-columns:1fr}
+  .hero img{height:195px;grid-row:1}
+  .hero-copy{padding:24px}
+  .hero h1{font-size:37px}
+  .hero p{font-size:14px}
+  .grid,.grid.three{grid-template-columns:1fr 1fr;gap:10px}
+  .card-body{padding:12px}
+  .card h3{font-size:16px}
+  .card .photo{height:120px}
+  .card-actions{gap:5px}
+  .card-actions .btn{font-size:11px;padding:8px}
+  .sec-head h2{font-size:24px}
+  .list-card img{width:115px}
+  .list-card .card-body{padding:10px}
+  .filters{display:block}
+  .filter-item{margin-bottom:10px}
+  .field-row{grid-template-columns:1fr}
+  .intro-content{grid-template-columns:1fr}
+  .intro-art img{height:185px}
+  .intro h1{font-size:37px}
+  .intro p{font-size:15px}
+}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<div id="modals"></div>
 
 <script>
-// ====== CONFIGURE AQUI ======
-const API_URL = "https://script.google.com/macros/s/AKfycbw8wH0kXpIbZEz10i1zSSWU5Ww9l7-xKeCnFvmGpjkszRvWsFigFuXBn-Ca_Cr0Wik/exec";
-// ============================
+/* =====================================================================
+   1. CONFIGURAÇÃO
+   ===================================================================== */
+// URL do Apps Script (termina em /exec). Troque se usar outra implantação.
+const API_URL = "https://script.google.com/macros/s/AKfycbz-c3u7RrYJFvwntfclvrNgE6Y5RvRDnrLWufDy0RX6QNzCJ1ayDhGcFOHfkrWv3YPD/exec";
+const STORAGE_KEY = 'viage_mvp_v2_state';
 
-const $ = id => document.getElementById(id);
-const money = n => Number(n).toLocaleString('pt-BR', {style:'currency', currency:'BRL'});
-const store = {
-  get(k, f){ try { const v = JSON.parse(localStorage.getItem(k)); return v === null || v === undefined ? f : v; } catch(e){ return f; } },
-  set(k, v){ try { localStorage.setItem(k, JSON.stringify(v)); } catch(e){} }
+/* =====================================================================
+   2. DADOS (todos ilustrativos)
+   ===================================================================== */
+const IMG = {
+  paris:'https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=1100&q=80',
+  roma:'https://images.unsplash.com/photo-1552832230-c0197dd311b5?w=1100&q=80',
+  lisboa:'https://images.unsplash.com/photo-1555881400-74d7acaacd8b?w=1100&q=80',
+  toquio:'https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?w=1100&q=80',
+  buenosaires:'https://images.unsplash.com/photo-1589909202802-8f4aadce1849?w=1100&q=80',
+  londres:'https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=1100&q=80',
+  rio:'https://images.unsplash.com/photo-1483729558449-99ef09a8c325?w=1100&q=80',
+  floripa:'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1100&q=80',
+  balneario:'https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=1100&q=80',
+  blumenau:'https://images.unsplash.com/photo-1519681393784-d120267933ba?w=1100&q=80',
+  hotel:'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800&q=75',
+  hotel2:'https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=800&q=75',
+  food:'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=800&q=75',
+  food2:'https://images.unsplash.com/photo-1552566626-52f8b828add9?w=800&q=75',
+  food3:'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800&q=75',
+  trip:'https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=850&q=75'
 };
 
-const MENU = [['inicio','⌂','Início'],['destinos','⌕','Destinos'],['descobrir','✦','Descobrir'],['gastos','＄','Gastos']];
+// travel = valor ilustrativo de passagem ida e volta
+const DEST = [
+  {id:'paris',       name:'Paris',              region:'França',          mode:'Internacional', lat:48.8566,  lon:2.3522,   travel:4550, desc:'Arte, cafés e passeios históricos'},
+  {id:'roma',        name:'Roma',               region:'Itália',          mode:'Internacional', lat:41.9028,  lon:12.4964,  travel:4850, desc:'História, gastronomia e praças'},
+  {id:'lisboa',      name:'Lisboa',             region:'Portugal',        mode:'Internacional', lat:38.7223,  lon:-9.1393,  travel:3450, desc:'Mirantes e ruas encantadoras'},
+  {id:'toquio',      name:'Tóquio',             region:'Japão',           mode:'Internacional', lat:35.6762,  lon:139.6503, travel:6950, desc:'Tradição e tecnologia'},
+  {id:'buenosaires', name:'Buenos Aires',       region:'Argentina',       mode:'Internacional', lat:-34.6037, lon:-58.3816, travel:1650, desc:'Cultura e gastronomia'},
+  {id:'londres',     name:'Londres',            region:'Reino Unido',     mode:'Internacional', lat:51.5072,  lon:-0.1276,  travel:5100, desc:'Museus, parques e bairros'},
+  {id:'rio',         name:'Rio de Janeiro',     region:'Brasil',          mode:'Nacional',      lat:-22.9068, lon:-43.1729, travel:890,  desc:'Praias e paisagens inesquecíveis'},
+  {id:'floripa',     name:'Florianópolis',      region:'Santa Catarina',  mode:'Regional',      lat:-27.5949, lon:-48.5482, travel:230,  desc:'Praias, trilhas e natureza'},
+  {id:'balneario',   name:'Balneário Camboriú', region:'Santa Catarina',  mode:'Regional',      lat:-26.9926, lon:-48.6352, travel:180,  desc:'Orla e atrações à beira-mar'},
+  {id:'blumenau',    name:'Blumenau',           region:'Santa Catarina',  mode:'Regional',      lat:-26.9194, lon:-49.0661, travel:130,  desc:'Cultura e gastronomia'}
+].map(d => ({...d, img: IMG[d.id]}));
 
-const DESTS = [
-  {id:1,name:'Gramado',country:'Brasil',kind:'Cultura',desc:'Gastronomia, arquitetura e paisagens da Serra Gaúcha.',img:'https://images.unsplash.com/photo-1519681393784-d120267933ba?w=800&q=80'},
-  {id:2,name:'Florianópolis',country:'Brasil',kind:'Natureza',desc:'Praias, trilhas e passeios para todas as estações.',img:'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&q=80'},
-  {id:3,name:'Santiago',country:'Chile',kind:'Cultura',desc:'Cultura urbana e experiências entre montanhas.',img:'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=800&q=80'},
-  {id:4,name:'Lisboa',country:'Portugal',kind:'Cultura',desc:'Bairros históricos, mirantes e culinária.',img:'https://images.unsplash.com/photo-1555881400-74d7acaacd8b?w=800&q=80'},
-  {id:5,name:'Bariloche',country:'Argentina',kind:'Natureza',desc:'Lagos, montanhas e aventuras ao ar livre.',img:'https://images.unsplash.com/photo-1470770841072-f978cf4d019e?w=800&q=80'},
-  {id:6,name:'Serra do Rio do Rastro',country:'Brasil',kind:'Estrada',desc:'Curvas e mirantes icônicos para viajar de carro.',img:'https://images.unsplash.com/photo-1500534623283-312aade485b7?w=800&q=80'}
-];
+const ATTRACTIONS = {
+  paris:['Torre Eiffel','Museu do Louvre','Jardim de Luxemburgo','Arco do Triunfo'],
+  roma:['Coliseu','Fontana di Trevi','Panteão','Fórum Romano'],
+  lisboa:['Torre de Belém','Castelo de São Jorge','Praça do Comércio','Mosteiro dos Jerónimos'],
+  toquio:['Templo Sensō-ji','Cruzamento de Shibuya','Parque Ueno','Santuário Meiji'],
+  buenosaires:['Obelisco','Caminito','Teatro Colón','Jardim Japonês'],
+  londres:['Big Ben','Tower Bridge','British Museum','Hyde Park'],
+  rio:['Cristo Redentor','Pão de Açúcar','Praia de Copacabana','Jardim Botânico'],
+  floripa:['Praia da Joaquina','Lagoa da Conceição','Ponte Hercílio Luz','Praia do Campeche'],
+  balneario:['Parque Unipraias','Praia Central','Roda FG Big Wheel','Praia de Laranjeiras'],
+  blumenau:['Vila Germânica','Parque Ramiro Ruediger','Museu da Cerveja','Rua XV de Novembro']
+};
+const HOTEL_NAMES = ['Casa Aurora Hotel','Jardim Boutique Stay','Viva Centro Suites','Estação Vista Hotel'];
+const REST_NAMES  = ['Mesa & Afeto','Bistrô do Bairro','Cantina Horizonte','Terra & Sabor'];
+const OFFSET_LAT  = [.003, -.011, .024, .057];
+const OFFSET_LON  = [.002,  .009, -.016, .049];
+const HOTEL_PRICE = [290, 460, 220, 370];
+const REST_PRICE  = [55, 85, 110, 45];
+const ATTR_PRICE  = [0, 45, 95, 135];
 
-// ---------- Navegação ----------
-function go(page){
-  document.querySelectorAll('.page').forEach(x => x.classList.toggle('active', x.id === page));
-  document.querySelectorAll('[data-page]').forEach(x => x.classList.toggle('active', x.dataset.page === page));
-  window.scrollTo({top:0, behavior:'smooth'});
+// Lugares (hotéis, restaurantes e atrações) gerados para cada destino
+const ITEMS = [];
+DEST.forEach(d => {
+  for (let i = 0; i < 4; i++) {
+    for (const type of ['hotel', 'restaurante', 'atracao']) {
+      const name  = type === 'hotel' ? HOTEL_NAMES[i] : type === 'restaurante' ? REST_NAMES[i] : ATTRACTIONS[d.id][i];
+      const price = type === 'hotel'
+        ? HOTEL_PRICE[i] * (d.mode === 'Internacional' ? 1.5 : 1)
+        : type === 'restaurante' ? REST_PRICE[i] : ATTR_PRICE[i];
+      const img = type === 'hotel' ? (i % 2 ? IMG.hotel2 : IMG.hotel)
+        : type === 'restaurante' ? [IMG.food, IMG.food2, IMG.food3, IMG.food][i]
+        : d.img;
+      const desc = type === 'hotel' ? 'Hospedagem ilustrativa • diária para 2 pessoas'
+        : type === 'restaurante' ? 'Restaurante fictício • gasto estimado por pessoa'
+        : 'Atração real • valor de visita ilustrativo';
+      ITEMS.push({
+        id: `${d.id}-${type}-${i}`, dest: d.id, type, name,
+        lat: d.lat + OFFSET_LAT[i], lon: d.lon + OFFSET_LON[i],
+        price: Math.round(price), img, desc
+      });
+    }
+  }
+});
+
+// Roteiros fictícios da comunidade
+const COMMUNITY = [];
+DEST.forEach((d, k) => {
+  for (let i = 0; i < 3; i++) {
+    COMMUNITY.push({
+      id: `${d.id}-roteiro-${i}`, dest: d.id,
+      title: [`Uma semana inesquecível em ${d.name}`, `Descobrindo ${d.name} sem pressa`, `Meu roteiro econômico em ${d.name}`][i],
+      author: ['Marina L.', 'André P.', 'Camila R.'][i],
+      days: [7, 5, 4][i],
+      budget: Math.round((d.travel + (d.mode === 'Internacional' ? 3400 : 1250)) * [1.2, .94, .72][i]),
+      likes: [42, 28, 16][i] + k,
+      img: d.img
+    });
+  }
+});
+
+/* =====================================================================
+   3. ESTADO
+   ===================================================================== */
+const storage = {
+  load() { try { return JSON.parse(localStorage.getItem(STORAGE_KEY)); } catch (e) { return null; } },
+  save(v) { try { localStorage.setItem(STORAGE_KEY, JSON.stringify(v)); } catch (e) {} }
+};
+
+// Salvo no navegador: roteiros, curtidas e se a apresentação já foi vista
+const state = Object.assign({trips: [], liked: [], intro: false}, storage.load() || {});
+const save = () => storage.save(state);
+
+// Estado de navegação (não é salvo)
+let page = 'home';
+let activeDest = 'paris';
+let activeTrip = null;
+let modal = '';
+let introStep = 0;
+let modeFilter = 'Todos';
+let listingType = 'all';
+let listingSearch = '';
+let radius = 10;
+let routeBudget = 100000;
+let plannerPhase = 0;
+let plannerDest = 'paris';
+let plannerMode = 'Internacional';
+
+/* =====================================================================
+   4. UTILITÁRIOS
+   ===================================================================== */
+const $ = id => document.getElementById(id);
+const money = v => Number(v || 0).toLocaleString('pt-BR', {style:'currency', currency:'BRL', maximumFractionDigits:0});
+const esc = v => String(v ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
+const dest = id => DEST.find(d => d.id === id) || DEST[0];
+const item = id => ITEMS.find(a => a.id === id);
+const trip = id => state.trips.find(t => t.id === id);
+
+function toast(msg) {
+  const el = document.createElement('div');
+  el.className = 'toast';
+  el.textContent = msg;
+  document.body.append(el);
+  setTimeout(() => el.remove(), 2600);
 }
 
-// ---------- Destinos ----------
-function card(d){
-  return `<article class="card"><img src="${d.img}" alt="Imagem ilustrativa de ${d.name}" loading="lazy"><div class="card-body"><span class="pill">${d.kind}</span><h3 style="margin-top:10px">${d.name}</h3><span class="small">${d.country}</span><p>${d.desc}</p><button class="btn alt" data-want="${d.id}">Quero algo assim →</button></div></article>`;
-}
-function bindWant(root){
-  root.querySelectorAll('[data-want]').forEach(b => b.addEventListener('click', () => {
-    const d = DESTS.find(x => x.id === +b.dataset.want);
-    if (d && !data['Destino dos sonhos'].trim()) data['Destino dos sonhos'] = d.name;
-    if (!doneShown) renderStep();
-    go('descobrir');
-  }));
-}
-function filterDest(){
-  const q = $('searchDest').value.toLowerCase().trim(), t = $('typeDest').value;
-  const arr = DESTS.filter(d => (d.name+' '+d.country+' '+d.desc).toLowerCase().includes(q) && (!t || d.kind === t));
-  $('resultCount').textContent = arr.length + ' destino(s)';
-  $('destCards').innerHTML = arr.length ? arr.map(card).join('') : '<div class="empty">Nenhum destino encontrado. Experimente outra busca.</div>';
-  bindWant($('destCards'));
+// Distância em km entre dois pontos (fórmula de Haversine)
+function distance(lat1, lon1, lat2, lon2) {
+  const r = Math.PI / 180, dLat = (lat2 - lat1) * r, dLon = (lon2 - lon1) * r;
+  const x = Math.sin(dLat / 2) ** 2 + Math.cos(lat1 * r) * Math.cos(lat2 * r) * Math.sin(dLon / 2) ** 2;
+  return 12742 * Math.asin(Math.sqrt(x));
 }
 
-// ---------- Formulário ----------
-const STEPS = [
+function isoDate(d) {
+  return [d.getFullYear(), String(d.getMonth() + 1).padStart(2, '0'), String(d.getDate()).padStart(2, '0')].join('-');
+}
+function futureISO(days) { const t = new Date(); t.setDate(t.getDate() + days); return isoDate(t); }
+function addDays(iso, n) { const [y, m, d] = iso.split('-').map(Number); return isoDate(new Date(y, m - 1, d + n)); }
+function formatDate(iso) { if (!iso) return 'Data a definir'; const [y, m, d] = iso.split('-'); return `${d}/${m}/${y}`; }
+function datePlus(n) { const d = new Date(); d.setDate(d.getDate() + n); return d.toLocaleDateString('pt-BR', {day:'2-digit', month:'short', year:'numeric'}); }
+function fare(d, n) { return Math.round(d.travel * [1, 0.84, 1.17][n]); }
+
+function nav(p, id) {
+  page = p;
+  if (id) activeDest = id;
+  modal = '';
+  render();
+  window.scrollTo(0, 0);
+}
+function btn(label, action, cls = '') {
+  return `<button class="btn ${cls}" onclick="${action}">${label}</button>`;
+}
+
+/* =====================================================================
+   5. TELAS
+   ===================================================================== */
+function cardDest(d) {
+  return `
+  <article class="card">
+    <img class="photo" loading="lazy" src="${d.img}" alt="Fotografia ilustrativa de ${esc(d.name)}">
+    <div class="card-body">
+      <span class="pill ${d.mode === 'Regional' ? 'green' : ''}">${d.mode}</span>
+      <h3>${esc(d.name)}</h3>
+      <small>${esc(d.region)} • ${esc(d.desc)}</small>
+      <div class="card-actions">${btn('Explorar →', `nav('dest','${d.id}')`, 'small green')}</div>
+    </div>
+  </article>`;
+}
+
+function cardRoute(c) {
+  const d = dest(c.dest);
+  const likes = c.likes + (state.liked.includes(c.id) ? 1 : 0);
+  return `
+  <article class="card">
+    <img class="photo" loading="lazy" src="${c.img}" alt="Imagem ilustrativa de ${esc(d.name)}">
+    <div class="card-body">
+      <small>${esc(d.name)} • ${c.days} dias • por ${esc(c.author)}</small>
+      <h3>${esc(c.title)}</h3>
+      <div class="price">${money(c.budget)} <small>estimativa total</small></div>
+      <div class="card-actions">
+        ${btn('Ver roteiro', `showCommunity('${c.id}')`, 'green small')}
+        ${btn(`♡ ${likes}`, `likeRoute('${c.id}')`, 'light small')}
+      </div>
+    </div>
+  </article>`;
+}
+
+function navHeader() {
+  const links = [['home','Início'], ['explore','Explorar'], ['planner','Planejar'], ['trips','Meus roteiros'], ['community','Comunidade']];
+  return `
+  <header class="topbar"><div class="shell top-inner">
+    <div class="brand" onclick="nav('home')">
+      <div class="logo"><span>↗</span></div>viage
+      <span style="font-size:12px;align-self:end;margin:0 0 6px;color:var(--green);letter-spacing:0">viaje do seu jeito.</span>
+    </div>
+    <nav class="nav" aria-label="Navegação principal">
+      ${links.map(([p, t]) => `<button class="${page === p ? 'active' : ''}" onclick="nav('${p}')">${t}</button>`).join('')}
+    </nav>
+  </div></header>`;
+}
+
+function topNote() {
+  return `<div class="note"><b>Protótipo educacional:</b> preços, passagens, hospedagens, estabelecimentos, perfis e reservas são exemplos fictícios. A busca por distância usa coordenadas ilustrativas. Não realiza pagamentos nem reservas reais.</div>`;
+}
+
+function homePage() {
+  const featured = DEST.filter(d => modeFilter === 'Todos' || d.mode === modeFilter);
+  const routes = COMMUNITY.filter(c => modeFilter === 'Todos' || dest(c.dest).mode === modeFilter).slice(0, 3);
+  return `
+  <div class="shell">
+    <section class="hero">
+      <div class="hero-copy">
+        <span class="pill">✦ Planeje • descubra • compartilhe</span>
+        <h1>O mundo é grande. Seu próximo passo começa aqui.</h1>
+        <p>Descubra destinos, monte sua viagem e aproveite roteiros da comunidade, tudo em um só lugar.</p>
+        <div class="hero-actions">
+          ${btn('✦ Planeje sua viagem', `nav('planner')`)}
+          ${btn('Explorar destinos', `nav('explore')`, 'green')}
+        </div>
+      </div>
+      <img src="${IMG.paris}" alt="Fotografia real da Torre Eiffel em Paris">
+    </section>
+    ${topNote()}
+    <section class="section">
+      <div class="sec-head"><div>
+        <span class="pill green">Escolhidos para você • demonstração</span>
+        <h2>Para onde vamos?</h2>
+        <p class="muted">No produto final, esta seleção poderá ser personalizada ao perfil do usuário.</p>
+      </div></div>
+      <div class="tabs">
+        ${['Todos','Regional','Nacional','Internacional'].map(m => `<button onclick="modeFilter='${m}';render()" class="${modeFilter === m ? 'active' : ''}">${m}</button>`).join('')}
+      </div>
+      <div class="grid">${featured.map(cardDest).join('')}</div>
+    </section>
+    <section class="section community">
+      <div class="sec-head">
+        <div>
+          <span class="pill green">De viajante para viajante</span>
+          <h2>Inspiração da comunidade</h2>
+          <p class="muted">Roteiros publicados por perfis fictícios para explorar e adaptar.</p>
+        </div>
+        ${btn('Ver todos', `nav('community')`, 'light small')}
+      </div>
+      <div class="grid three">${routes.map(cardRoute).join('')}</div>
+    </section>
+    <section class="section">
+      <div class="banner">
+        <h2>Não sabe para onde ir?</h2>
+        <p>Responda algumas perguntas rápidas e nossa equipe sugere o destino ideal para o seu perfil.</p>
+        ${btn('Me ajude a escolher', `nav('discover')`, 'green')}
+      </div>
+    </section>
+  </div>`;
+}
+
+function explorePage() {
+  const q = listingSearch.toLowerCase();
+  const ds = DEST.filter(d => (modeFilter === 'Todos' || d.mode === modeFilter) && (d.name + ' ' + d.region).toLowerCase().includes(q));
+  return `
+  <div class="shell section">
+    <div class="sec-head"><div>
+      <span class="pill">Explore o mundo</span>
+      <h2>Destinos e experiências</h2>
+      <p class="muted">Abra um destino para encontrar hospedagens, restaurantes, atrações e roteiros da comunidade.</p>
+    </div></div>
+    <div class="filters">
+      <div class="filter-item"><label>Pesquisar destino</label><input class="input" id="searchDest" value="${esc(listingSearch)}" placeholder="Ex.: Paris, Florianópolis"></div>
+      <div class="filter-item"><label>Tipo de viagem</label>
+        <select id="modeSelect">${['Todos','Regional','Nacional','Internacional'].map(m => `<option ${m === modeFilter ? 'selected' : ''}>${m}</option>`).join('')}</select>
+      </div>
+      ${btn('Pesquisar', `listingSearch=document.getElementById('searchDest').value;modeFilter=document.getElementById('modeSelect').value;render()`, 'green')}
+    </div>
+    <div class="section grid">${ds.map(cardDest).join('') || '<p>Nenhum destino encontrado.</p>'}</div>
+  </div>`;
+}
+
+function listCard(it) {
+  const d = dest(it.dest);
+  const label = it.type === 'atracao' ? 'Passeio / atração' : it.type === 'hotel' ? 'Hospedagem' : 'Restaurante';
+  const km = distance(d.lat, d.lon, it.lat, it.lon).toFixed(1);
+  return `
+  <article class="list-card">
+    <img loading="lazy" src="${it.img}" alt="Foto ilustrativa de ${esc(it.type)}">
+    <div class="card-body">
+      <span class="pill ${it.type === 'atracao' ? 'green' : ''}">${label}</span>
+      <h3>${esc(it.name)}</h3>
+      <small>${esc(it.desc)} • aprox. ${km} km do centro simulado</small>
+      <div class="stack" style="margin-top:10px">
+        <span class="price">${it.price === 0 ? 'Grátis' : money(it.price)}</span>
+        ${btn('Detalhes', `showItem('${it.id}')`, 'light small')}
+        ${btn('+ Adicionar ao roteiro', `addModal('${it.id}')`, 'green small')}
+      </div>
+    </div>
+  </article>`;
+}
+
+function destinationPage() {
+  const d = dest(activeDest);
+  const q = listingSearch.toLowerCase();
+  const items = ITEMS.filter(i =>
+    i.dest === d.id &&
+    (listingType === 'all' || listingType === i.type) &&
+    distance(d.lat, d.lon, i.lat, i.lon) <= radius &&
+    i.name.toLowerCase().includes(q));
+  const routes = COMMUNITY.filter(r => r.dest === d.id && r.budget <= routeBudget);
+  return `
+  <div class="shell">
+    <section class="hero" style="min-height:315px">
+      <div class="hero-copy">
+        <span class="pill">${esc(d.region)} • ${d.mode}</span>
+        <h1>Descubra ${esc(d.name)}</h1>
+        <p>${esc(d.desc)}. Explore opções, inspire-se e adicione o que gostar aos seus roteiros.</p>
+        <div class="hero-actions">
+          ${btn('Criar viagem para cá', `plannerDest='${d.id}';plannerPhase=1;nav('planner')`)}
+          ${btn('Ver meus roteiros', `nav('trips')`, 'green')}
+        </div>
+      </div>
+      <img src="${d.img}" alt="Fotografia ilustrativa de ${esc(d.name)}">
+    </section>
+    ${topNote()}
+    <section class="section">
+      <div class="sec-head"><div>
+        <h2>Conheça ${esc(d.name)}</h2>
+        <p class="muted">Use os filtros para descobrir lugares e adicioná-los a qualquer roteiro.</p>
+      </div></div>
+      <div class="filters">
+        <div class="filter-item"><label>O que procura?</label>
+          <select id="typeSelect">
+            <option value="all" ${listingType === 'all' ? 'selected' : ''}>Tudo</option>
+            <option value="hotel" ${listingType === 'hotel' ? 'selected' : ''}>Hotéis</option>
+            <option value="restaurante" ${listingType === 'restaurante' ? 'selected' : ''}>Restaurantes</option>
+            <option value="atracao" ${listingType === 'atracao' ? 'selected' : ''}>Passeios / atrações</option>
+          </select>
+        </div>
+        <div class="filter-item"><label>Raio demonstrativo</label>
+          <select id="radiusSelect">${[1,3,5,10,25].map(x => `<option value="${x}" ${radius === x ? 'selected' : ''}>Até ${x} km</option>`).join('')}</select>
+        </div>
+        <div class="filter-item"><label>Nome do lugar</label><input class="input" id="placeSearch" placeholder="Buscar no catálogo" value="${esc(listingSearch)}"></div>
+        ${btn('Filtrar', `listingType=document.getElementById('typeSelect').value;radius=+document.getElementById('radiusSelect').value;listingSearch=document.getElementById('placeSearch').value;render()`, 'green')}
+      </div>
+      <p class="helper">Distâncias calculadas a partir do centro ilustrativo e posições demonstrativas. Não é um sistema de busca geográfica real.</p>
+      <div class="two-col section">
+        <div>
+          <h2 style="font-size:25px;margin-bottom:16px">${items.length} opções encontradas</h2>
+          <div class="item-list">${items.map(listCard).join('') || '<div class="empty">Nenhuma opção neste raio. Experimente ampliar a distância.</div>'}</div>
+        </div>
+        <aside class="sidebox">
+          <span class="pill green">Passagens • simulação</span>
+          <h2 style="font-size:24px;margin-top:9px">Quando ir?</h2>
+          <p>Compare datas de referência para uma pessoa, ida e volta, saindo de Florianópolis (ilustrativo).</p>
+          ${[0, 1, 2].map(n => `<div class="event"><b>${datePlus(n * 7 + 30)}</b><div class="price">${money(fare(d, n))}</div></div>`).join('')}
+          ${btn('Planejar com datas', `plannerDest='${d.id}';plannerPhase=1;nav('planner')`, 'green')}
+        </aside>
+      </div>
+    </section>
+    <section class="section community">
+      <div class="sec-head"><div>
+        <h2>Roteiros de quem já explorou ${esc(d.name)}</h2>
+        <p class="muted">Exemplos criados para a demonstração, com filtros por orçamento.</p>
+      </div></div>
+      <div class="filters">
+        <div class="filter-item"><label>Orçamento máximo simulado</label>
+          <select id="budgetSelect">${[2000,4000,6000,10000,20000,100000].map(n => `<option value="${n}" ${routeBudget === n ? 'selected' : ''}>${n === 100000 ? 'Qualquer valor' : money(n)}</option>`).join('')}</select>
+        </div>
+        ${btn('Aplicar', `routeBudget=+document.getElementById('budgetSelect').value;render()`, 'green')}
+      </div>
+      <div class="grid three" style="margin-top:18px">${routes.map(cardRoute).join('') || '<div class="empty">Nenhum roteiro para o orçamento escolhido.</div>'}</div>
+    </section>
+  </div>`;
+}
+
+/* ---------- Planejador ---------- */
+function dateOptions(d) {
+  return [0, 1, 2, 3, 4, 5].map(n => `
+    <div class="event"><label style="display:flex;gap:10px;align-items:center;margin:0">
+      <input type="radio" name="travel-date" value="${futureISO(28 + n * 7)}" ${n === 0 ? 'checked' : ''} style="width:auto;min-height:0">
+      <span>${formatDate(futureISO(28 + n * 7))} — ${money(fare(d, n % 3))}</span>
+    </label></div>`).join('');
+}
+
+function plannerPage() {
+  const d = dest(plannerDest);
+  let body;
+  if (plannerPhase === 0) {
+    body = `
+      <h2>Você já sabe para onde quer ir?</h2>
+      <p class="muted">Podemos começar pelo destino ou pedir uma sugestão para a nossa equipe.</p>
+      <div class="grid three" style="margin-top:20px">
+        <div class="banner"><h3>📍 Já tenho um destino</h3><p>Escolha a cidade e veja opções de viagem.</p>${btn('Escolher destino', `plannerPhase=1;render()`, 'green')}</div>
+        <div class="banner"><h3>🧭 Quero descobrir</h3><p>Responda algumas perguntas e nossa equipe sugere o destino ideal.</p>${btn('Me ajude a escolher', `nav('discover')`, 'green')}</div>
+      </div>`;
+  } else if (plannerPhase === 1) {
+    body = `
+      <h2>Qual será seu destino?</h2>
+      <div class="field" style="max-width:480px"><label>Estilo / alcance</label>
+        <select id="plannerMode" onchange="plannerMode=this.value;render()">${['Internacional','Regional','Nacional','Todos'].map(m => `<option ${m === plannerMode ? 'selected' : ''}>${m}</option>`).join('')}</select>
+      </div>
+      <div class="grid">
+        ${DEST.filter(x => x.mode === plannerMode || plannerMode === 'Todos').map(x => `
+          <article class="card">
+            <img class="photo" src="${x.img}" loading="lazy" alt="${esc(x.name)}">
+            <div class="card-body">
+              <h3>${esc(x.name)}</h3>
+              <small>A partir de ${money(x.travel)} • passagem ilustrativa</small>
+              <div class="card-actions">${btn('Selecionar', `plannerDest='${x.id}';plannerPhase=2;render()`, 'green small')}</div>
+            </div>
+          </article>`).join('')}
+      </div>`;
+  } else {
+    body = `
+      <div class="two-col">
+        <div>
+          <h2>Escolha a data para ${esc(d.name)}</h2>
+          <p>Valores de ida e volta para <b>uma pessoa</b>, com origem ilustrativa em Florianópolis. Não são cotações reais.</p>
+          ${dateOptions(d)}
+          <div class="field-row">
+            <div class="field"><label>Nome da viagem</label><input id="tripName" class="input" value="Minha viagem para ${esc(d.name)}"></div>
+            <div class="field"><label>Quantos dias?</label><input id="tripDays" class="input" type="number" min="1" max="60" value="5"></div>
+          </div>
+          ${btn('Criar meu roteiro', `createTrip()`, 'green')}
+        </div>
+        <aside class="sidebox">
+          <img src="${d.img}" class="photo" alt="${esc(d.name)}">
+          <h3 style="margin-top:13px">${esc(d.name)}</h3>
+          <p>Depois de criar sua viagem, você poderá adicionar hospedagens, atrações e restaurantes, com ou sem data.</p>
+        </aside>
+      </div>`;
+  }
+  return `
+  <div class="shell section">
+    <div class="sec-head"><div>
+      <span class="pill">Seu jeito de viajar</span>
+      <h2>Planeje sua próxima viagem</h2>
+      <p class="muted">Acompanhe as etapas; todos os valores são simulados.</p>
+    </div></div>
+    <div class="wizard-card">
+      <div class="tabs">
+        <button class="${plannerPhase === 0 ? 'active' : ''}" onclick="plannerPhase=0;render()">1. Estilo</button>
+        <button class="${plannerPhase === 1 ? 'active' : ''}" onclick="plannerPhase=1;render()">2. Destino</button>
+        <button class="${plannerPhase === 2 ? 'active' : ''}" onclick="plannerPhase=2;render()">3. Datas e preços</button>
+      </div>
+      ${body}
+    </div>
+  </div>`;
+}
+
+function createTrip() {
+  const d = dest(plannerDest);
+  const radios = [...document.querySelectorAll('input[name="travel-date"]')];
+  const chosen = radios.findIndex(i => i.checked);
+  const t = {
+    id: 'v' + Date.now(),
+    name: ($('tripName')?.value || '').trim() || 'Minha viagem',
+    dest: plannerDest,
+    date: radios[chosen]?.value || '',
+    days: Math.max(1, Math.min(60, +$('tripDays')?.value || 5)),
+    entries: [],
+    fare: fare(d, Math.max(chosen, 0) % 3)
+  };
+  state.trips.push(t);
+  activeTrip = t.id;
+  save();
+  toast('Roteiro criado!');
+  nav('trip');
+}
+
+/* ---------- Meus roteiros ---------- */
+const totalTrip = t => (t.fare || 0) + t.entries.reduce((s, e) => s + (e.price || 0), 0);
+
+function tripsPage() {
+  const list = state.trips.map(t => {
+    const d = dest(t.dest);
+    return `
+    <article class="card">
+      <img class="photo" src="${d.img}" alt="${esc(d.name)}">
+      <div class="card-body">
+        <h3>${esc(t.name)}</h3>
+        <small>${esc(d.name)} • ${formatDate(t.date)} • ${t.days} dias • ${t.entries.length} paradas</small>
+        <div class="price" style="margin-top:12px">${money(totalTrip(t))}</div>
+        <div class="card-actions">
+          ${btn('Abrir roteiro', `activeTrip='${t.id}';nav('trip')`, 'green small')}
+          ${btn('Excluir', `deleteTrip('${t.id}')`, 'light small')}
+        </div>
+      </div>
+    </article>`;
+  }).join('');
+  return `
+  <div class="shell section">
+    <div class="sec-head">
+      <div>
+        <span class="pill green">Salvos neste navegador</span>
+        <h2>Meus roteiros</h2>
+        <p class="muted">Você pode planejar várias viagens ao mesmo tempo. Os dados ficam apenas neste navegador.</p>
+      </div>
+      ${btn('+ Nova viagem', `plannerPhase=0;nav('planner')`)}
+    </div>
+    ${state.trips.length ? `<div class="grid three">${list}</div>` : '<div class="empty">Você ainda não criou nenhum roteiro. Comece planejando uma viagem!</div>'}
+  </div>`;
+}
+
+function deleteTrip(id) {
+  if (!confirm('Excluir este roteiro salvo neste navegador?')) return;
+  state.trips = state.trips.filter(t => t.id !== id);
+  save();
+  render();
+}
+
+function eventCard(e, tid) {
+  return `
+  <div class="event">
+    <div class="stack"><span class="pill green">${esc(e.time || 'Horário livre')}</span><small>${esc(e.type)}</small></div>
+    <div class="event-title" style="margin-top:8px">${esc(e.name)}</div>
+    <p class="muted" style="margin:4px 0">${e.price ? money(e.price) : 'Sem custo estimado'} • ${e.reserve ? 'Interesse em reserva (simulado)' : 'Adicionado sem reservar'}</p>
+    <div class="card-actions">
+      ${btn('Editar data', `editEntry('${tid}','${e.id}')`, 'light small')}
+      ${btn('Remover', `removeEntry('${tid}','${e.id}')`, 'light small')}
+    </div>
+  </div>`;
+}
+
+function itineraryPage() {
+  const t = trip(activeTrip);
+  if (!t) return tripsPage();
+  const d = dest(t.dest);
+  const dated = t.entries.filter(e => e.day).sort((a, b) => (a.day - b.day) || String(a.time).localeCompare(String(b.time)));
+  const undated = t.entries.filter(e => !e.day);
+  const days = [...new Set(dated.map(e => e.day))];
+  return `
+  <div class="shell section">
+    <div class="sec-head">
+      <div>
+        <span class="pill green">Roteiro pessoal • ${esc(d.name)}</span>
+        <h2>${esc(t.name)}</h2>
+        <p class="muted">${formatDate(t.date)} • ${t.days} dias • ${t.entries.length} atividades</p>
+      </div>
+      <div class="stack">
+        ${btn('+ Explorar lugares', `listingType='all';listingSearch='';radius=10;nav('dest','${d.id}')`, 'green')}
+        ${btn('Meus roteiros', `nav('trips')`, 'light')}
+      </div>
+    </div>
+    <div class="two-col">
+      <div>
+        <div class="banner"><h2>Sua viagem, em sequência</h2><p>Adicione lugares em dias e horários específicos ou mantenha sugestões sem data definida.</p></div>
+        ${days.length
+          ? days.map(day => `
+              <div class="dayline">Dia ${day}${t.date ? ' • ' + formatDate(addDays(t.date, day - 1)) : ''}</div>
+              <div class="timeline">${dated.filter(e => e.day === day).map(e => eventCard(e, t.id)).join('')}</div>`).join('')
+          : '<div class="empty" style="margin-top:16px">Seu roteiro ainda não tem atividades com data definida.</div>'}
+        <div class="dayline">Ideias sem data definida</div>
+        <div class="timeline">${undated.map(e => eventCard(e, t.id)).join('') || '<p class="muted">Nenhum lugar na lista de ideias.</p>'}</div>
+      </div>
+      <aside class="sidebox">
+        <h2 style="font-size:25px">Orçamento estimado</h2>
+        <div class="event"><small>Passagens (1 pessoa • ilustrativas)</small><div class="price">${money(t.fare)}</div></div>
+        <div class="event"><small>Locais e atividades adicionados</small><div class="price">${money(totalTrip(t) - t.fare)}</div></div>
+        <div class="event"><small>Total estimado • sem serviços extras</small><div class="price" style="font-size:26px">${money(totalTrip(t))}</div></div>
+        <p class="helper">Hotéis são considerados por uma diária por item adicionado. Para várias noites, adicione novas diárias. Nada é reservado de verdade.</p>
+        ${btn('Explorar ' + esc(d.name), `listingType='all';listingSearch='';radius=10;nav('dest','${d.id}')`, 'green')}
+      </aside>
+    </div>
+  </div>`;
+}
+
+function removeEntry(tid, id) {
+  const t = trip(tid);
+  t.entries = t.entries.filter(x => x.id !== id);
+  save();
+  render();
+}
+
+function editEntry(tid, id) {
+  const t = trip(tid), e = t.entries.find(x => x.id === id);
+  modal = `
+    <h2>Editar atividade</h2><p>${esc(e.name)}</p>
+    <div class="field"><label>Dia da viagem (opcional)</label><input id="entryDay" type="number" class="input" min="1" max="${t.days}" value="${e.day || ''}" placeholder="Sem dia definido"></div>
+    <div class="field"><label>Horário (opcional)</label><input id="entryTime" type="time" class="input" value="${e.time || ''}"></div>
+    ${btn('Salvar mudanças', `saveEntry('${tid}','${id}')`, 'green')}`;
+  renderModal();
+}
+
+function saveEntry(tid, id) {
+  const t = trip(tid), e = t.entries.find(x => x.id === id);
+  e.day = Math.min(t.days, Math.max(0, +$('entryDay').value || 0));
+  e.time = $('entryTime').value;
+  save();
+  closeModal();
+  render();
+}
+
+/* ---------- Detalhes e adição de lugares ---------- */
+function showItem(id) {
+  const a = item(id);
+  modal = `
+    <img src="${a.img}" class="photo large" alt="Foto ilustrativa">
+    <h2 style="margin-top:15px">${esc(a.name)}</h2>
+    <span class="pill green">${esc(dest(a.dest).name)} • ${esc(a.type)}</span>
+    <p>${esc(a.desc)}</p>
+    <div class="price">${a.price ? money(a.price) : 'Gratuito'} <small>• valor demonstrativo</small></div>
+    <div class="card-actions">${btn('+ Adicionar a roteiro', `addModal('${id}')`, 'green')}${btn('Fechar', `closeModal()`, 'light')}</div>`;
+  renderModal();
+}
+
+function addModal(id) {
+  const a = item(id);
+  if (!state.trips.length) {
+    modal = `
+      <h2>Crie uma viagem primeiro</h2>
+      <p>Você pode salvar lugares em diferentes roteiros pessoais, mas precisa criar ao menos um.</p>
+      ${btn('Criar roteiro', `closeModal();plannerDest='${a.dest}';plannerPhase=2;nav('planner')`, 'green')}`;
+    renderModal();
+    return;
+  }
+  modal = `
+    <h2>Adicionar ao roteiro</h2>
+    <p><b>${esc(a.name)}</b> • ${esc(dest(a.dest).name)}</p>
+    <div class="field"><label>Qual roteiro receberá este lugar?</label>
+      <select id="whichTrip">${state.trips.map(t => `<option value="${t.id}" ${t.dest === a.dest ? 'selected' : ''}>${esc(t.name)} (${esc(dest(t.dest).name)})</option>`).join('')}</select>
+    </div>
+    <div class="field-row">
+      <div class="field"><label>Dia da viagem (opcional)</label><input class="input" type="number" min="1" id="addDay" placeholder="Deixe em branco"></div>
+      <div class="field"><label>Horário (opcional)</label><input class="input" id="addTime" type="time"></div>
+    </div>
+    <div class="field"><label style="display:flex;align-items:center;gap:8px"><input type="checkbox" style="width:auto;min-height:0" id="reserve"> Tenho interesse em reservar (apenas demonstração)</label></div>
+    <p class="helper">Adicionar ao roteiro não faz nenhuma reserva. Os preços registrados são somente estimativas.</p>
+    <div class="card-actions">${btn('Salvar no roteiro', `confirmAdd('${id}')`, 'green')}${btn('Cancelar', `closeModal()`, 'light')}</div>`;
+  renderModal();
+}
+
+function confirmAdd(id) {
+  const a = item(id), t = trip($('whichTrip').value);
+  const day = Math.min(t.days, Math.max(0, +$('addDay').value || 0));
+  t.entries.push({
+    id: 'e' + Date.now() + Math.random().toString(16).slice(2),
+    name: a.name, type: a.type, price: a.price,
+    day, time: $('addTime').value, reserve: $('reserve').checked
+  });
+  save();
+  closeModal();
+  toast('Lugar salvo em ' + t.name + '!');
+  render();
+}
+
+/* ---------- Comunidade ---------- */
+function showCommunity(id) {
+  const c = COMMUNITY.find(x => x.id === id), d = dest(c.dest);
+  const stops = ITEMS.filter(x => x.dest === c.dest && x.type === 'atracao').slice(0, 3);
+  modal = `
+    <img class="photo large" src="${d.img}" alt="Imagem de ${esc(d.name)}">
+    <h2 style="margin-top:13px">${esc(c.title)}</h2>
+    <p>Por ${esc(c.author)} • ${c.days} dias • orçamento simulado de ${money(c.budget)}</p>
+    <p>Um roteiro de exemplo com hospedagem, refeições e atrações em ${esc(d.name)}.</p>
+    <div class="item-list">${stops.map(x => `<div class="event"><b>${esc(x.name)}</b><p class="muted">Sugestão de parada • ${money(x.price)}</p></div>`).join('')}</div>
+    ${btn('Usar como inspiração', `copyCommunity('${id}')`, 'green')}`;
+  renderModal();
+}
+
+function copyCommunity(id) {
+  const c = COMMUNITY.find(x => x.id === id);
+  const stops = ITEMS.filter(x => x.dest === c.dest && x.type === 'atracao').slice(0, 3);
+  const t = {
+    id: 'v' + Date.now(), name: c.title, dest: c.dest, date: '', days: c.days, fare: 0,
+    entries: stops.map((a, i) => ({id: 'e' + Date.now() + i, name: a.name, type: a.type, price: a.price, day: i + 1, time: '', reserve: false}))
+  };
+  state.trips.push(t);
+  activeTrip = t.id;
+  save();
+  closeModal();
+  toast('Roteiro copiado!');
+  nav('trip');
+}
+
+function likeRoute(id) {
+  state.liked = state.liked.includes(id) ? state.liked.filter(x => x !== id) : [...state.liked, id];
+  save();
+  render();
+}
+
+function communityPage() {
+  const routes = COMMUNITY.filter(c => (modeFilter === 'Todos' || dest(c.dest).mode === modeFilter) && c.budget <= routeBudget);
+  return `
+  <div class="shell section">
+    <div class="sec-head"><div>
+      <span class="pill green">Experiências compartilhadas</span>
+      <h2>Comunidade Viage</h2>
+      <p class="muted">Conheça roteiros fictícios de viajantes e copie as ideias para seus planos.</p>
+    </div></div>
+    <div class="filters">
+      <div class="filter-item"><label>Tipo de viagem</label>
+        <select id="commMode">${['Todos','Regional','Nacional','Internacional'].map(m => `<option ${modeFilter === m ? 'selected' : ''}>${m}</option>`).join('')}</select>
+      </div>
+      <div class="filter-item"><label>Orçamento máximo</label>
+        <select id="commBudget">${[2000,4000,6000,10000,20000,100000].map(n => `<option value="${n}" ${routeBudget === n ? 'selected' : ''}>${n === 100000 ? 'Qualquer valor' : money(n)}</option>`).join('')}</select>
+      </div>
+      ${btn('Filtrar', `modeFilter=document.getElementById('commMode').value;routeBudget=+document.getElementById('commBudget').value;render()`, 'green')}
+    </div>
+    <div class="grid three section">${routes.map(cardRoute).join('') || '<div class="empty">Nenhum roteiro nesse filtro.</div>'}</div>
+  </div>`;
+}
+
+/* =====================================================================
+   6. "ME AJUDE A ESCOLHER" — formulário que grava na planilha
+   As chaves (k) são os nomes das colunas da aba "Pedidos".
+   ===================================================================== */
+const DISCOVER_STEPS = [
   {title:'Sobre a viagem', fields:[
     {k:'Quando', label:'Quando pretende viajar?', t:'chips', o:['No próximo mês','Em 2 a 3 meses','Em 4 a 6 meses','Daqui a mais de 6 meses','Ainda não sei']},
     {k:'Dias', label:'Quantos dias de viagem?', t:'chips', o:['1 a 2 dias','3 a 5 dias','6 a 9 dias','10 dias ou mais']},
@@ -221,162 +936,234 @@ const STEPS = [
   ]}
 ];
 
-const data = {consent:false, hp:''};
-let step = 0, doneShown = false;
 const sessionId = Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
-function resetData(){
-  STEPS.forEach(s => s.fields.forEach(f => data[f.k] = f.multi ? [] : ''));
-  data.consent = false; data.hp = '';
-}
-resetData();
+let discover;
 
-function valid(){
-  const s = STEPS[step];
-  for (const f of s.fields){
+function resetDiscover() {
+  discover = {step: 0, done: false, sending: false, error: '', data: {consent: false, hp: ''}};
+  DISCOVER_STEPS.forEach(s => s.fields.forEach(f => { discover.data[f.k] = f.multi ? [] : ''; }));
+}
+resetDiscover();
+
+const currentFields = () => DISCOVER_STEPS[discover.step].fields;
+
+function discoverValid() {
+  const D = discover.data;
+  for (const f of currentFields()) {
     if (f.opt) continue;
-    const v = data[f.k];
+    const v = D[f.k];
     if (f.multi ? v.length < 1 : !String(v).trim()) return false;
   }
-  if (step === STEPS.length - 1){
-    const em = data['E-mail'].trim(), ph = data['WhatsApp'].trim();
-    const emOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em);
-    const n = ph.replace(/\D/g, '').length, phOk = n >= 10 && n <= 13;
-    if (!emOk && !phOk) return false;
-    if (em && !emOk) return false;
-    if (ph && !phOk) return false;
-    if (!data.consent) return false;
+  if (discover.step === DISCOVER_STEPS.length - 1) {
+    const email = D['E-mail'].trim(), phone = D['WhatsApp'].trim();
+    const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    const digits = phone.replace(/\D/g, '').length;
+    const phoneOk = digits >= 10 && digits <= 13;
+    if (!emailOk && !phoneOk) return false;   // precisa de pelo menos um contato
+    if (email && !emailOk) return false;
+    if (phone && !phoneOk) return false;
+    if (!D.consent) return false;
   }
   return true;
 }
-function refresh(){ $('btnNext').disabled = !valid(); }
 
-function buildField(f){
-  const wrap = document.createElement('div'); wrap.className = 'field';
-  const lab = document.createElement('div'); lab.className = 'lbl'; lab.textContent = f.label; wrap.append(lab);
-  if (f.t === 'chips'){
-    const box = document.createElement('div'); box.className = 'chips';
-    const isOn = o => f.multi ? data[f.k].includes(o) : data[f.k] === o;
-    f.o.forEach(o => {
-      const b = document.createElement('button'); b.type = 'button'; b.className = 'chip' + (isOn(o) ? ' on' : ''); b.textContent = o;
-      b.addEventListener('click', () => {
-        if (f.multi){
-          const a = data[f.k];
-          if (a.includes(o)) data[f.k] = a.filter(x => x !== o);
-          else if (a.length < f.multi) data[f.k] = [...a, o];
-        } else data[f.k] = o;
-        box.querySelectorAll('.chip').forEach(c => c.classList.toggle('on', isOn(c.textContent)));
-        refresh();
-      });
-      box.append(b);
-    });
-    wrap.append(box);
+function refreshDiscoverBtn() {
+  const b = $('discoverNext');
+  if (b) b.disabled = discover.sending || !discoverValid();
+}
+
+function discoverField(f, fi) {
+  const D = discover.data;
+  let control;
+  if (f.t === 'chips') {
+    const on = o => f.multi ? D[f.k].includes(o) : D[f.k] === o;
+    control = `<div class="chips" id="chips-${fi}">${f.o.map((o, oi) =>
+      `<button type="button" class="chip ${on(o) ? 'on' : ''}" onclick="discoverPick(${fi},${oi})">${esc(o)}</button>`).join('')}</div>`;
+  } else if (f.t === 'area') {
+    control = `<textarea class="input" maxlength="300" placeholder="${esc(f.ph || '')}" oninput="discoverText(${fi},this.value)">${esc(D[f.k])}</textarea>`;
   } else {
-    const inp = document.createElement(f.t === 'area' ? 'textarea' : 'input');
-    inp.className = 'input'; inp.placeholder = f.ph || ''; inp.value = data[f.k]; inp.maxLength = 300;
-    if (f.itype) inp.type = f.itype;
-    inp.addEventListener('input', () => { data[f.k] = inp.value; refresh(); });
-    wrap.append(inp);
+    control = `<input class="input" type="${f.itype || 'text'}" maxlength="300" placeholder="${esc(f.ph || '')}" value="${esc(D[f.k])}" oninput="discoverText(${fi},this.value)">`;
   }
-  return wrap;
+  return `<div class="field" style="margin-bottom:22px"><label>${esc(f.label)}</label>${control}</div>`;
 }
 
-function renderStep(){
-  const s = STEPS[step], last = step === STEPS.length - 1;
-  $('stepLabel').textContent = `Etapa ${step + 1} de ${STEPS.length} • ${s.title}`;
-  $('bar').style.width = ((step + 1) / STEPS.length * 100) + '%';
-  const body = $('formBody'); body.innerHTML = '';
-  s.fields.forEach(f => body.append(buildField(f)));
-  if (last){
-    const hint = document.createElement('p'); hint.className = 'small'; hint.style.marginTop = '-10px';
-    hint.textContent = 'Informe e-mail ou WhatsApp (pelo menos um).'; body.append(hint);
-    const c = document.createElement('label'); c.className = 'consent';
-    c.innerHTML = '<input type="checkbox"><span>Autorizo receber a sugestão de destino por esse contato e o uso dos meus dados apenas para esse fim. Os dados não são vendidos nem compartilhados.</span>';
-    const cb = c.querySelector('input'); cb.checked = data.consent;
-    cb.addEventListener('change', () => { data.consent = cb.checked; refresh(); });
-    body.append(c);
-    const hp = document.createElement('input'); hp.className = 'hp'; hp.tabIndex = -1; hp.autocomplete = 'off'; hp.setAttribute('aria-hidden', 'true'); hp.value = data.hp;
-    hp.addEventListener('input', () => { data.hp = hp.value; });
-    body.append(hp);
+function discoverPick(fi, oi) {
+  const f = currentFields()[fi], o = f.o[oi], D = discover.data;
+  if (f.multi) {
+    if (D[f.k].includes(o)) D[f.k] = D[f.k].filter(x => x !== o);
+    else if (D[f.k].length < f.multi) D[f.k] = [...D[f.k], o];
+  } else {
+    D[f.k] = o;
   }
-  $('btnBack').classList.toggle('hidden', step === 0);
-  $('btnNext').textContent = last ? 'Enviar e receber minha sugestão' : 'Continuar';
-  $('formErr').innerHTML = '';
-  refresh();
+  // Atualiza só os botões (evita pular a tela)
+  [...$('chips-' + fi).children].forEach((el, i) => {
+    el.classList.toggle('on', f.multi ? D[f.k].includes(f.o[i]) : D[f.k] === f.o[i]);
+  });
+  refreshDiscoverBtn();
 }
+function discoverText(fi, value) { discover.data[currentFields()[fi].k] = value; refreshDiscoverBtn(); }
+function discoverConsent(checked) { discover.data.consent = checked; refreshDiscoverBtn(); }
+function discoverHp(value) { discover.data.hp = value; }
 
-async function submitForm(){
-  const btn = $('btnNext');
-  btn.disabled = true; btn.textContent = 'Enviando...'; $('formErr').innerHTML = '';
-  if (!data.hp){
+function discoverBack() {
+  if (discover.step > 0) { discover.step--; render(); window.scrollTo(0, 0); }
+}
+function discoverNext() {
+  if (!discoverValid()) return;
+  if (discover.step < DISCOVER_STEPS.length - 1) { discover.step++; render(); window.scrollTo(0, 0); }
+  else discoverSubmit();
+}
+function discoverAgain() { resetDiscover(); render(); }
+
+async function discoverSubmit() {
+  discover.sending = true;
+  discover.error = '';
+  render();
+  const D = discover.data;
+  if (!D.hp) {   // campo escondido preenchido = robô, não envia
     const fields = {};
-    Object.keys(data).forEach(k => {
+    Object.keys(D).forEach(k => {
       if (k === 'consent' || k === 'hp') return;
-      fields[k] = Array.isArray(data[k]) ? data[k].join('; ') : String(data[k]).trim();
+      fields[k] = Array.isArray(D[k]) ? D[k].join('; ') : String(D[k]).trim();
     });
     fields['Consentimento'] = 'sim';
     try {
-      await fetch(API_URL, {method:'POST', mode:'no-cors', headers:{'Content-Type':'text/plain;charset=utf-8'}, body: JSON.stringify({action:'create', id:sessionId, fields})});
-    } catch(e){
-      $('formErr').innerHTML = '<div class="err">Não foi possível enviar agora. Verifique sua conexão e tente novamente.</div>';
-      btn.textContent = 'Enviar e receber minha sugestão'; refresh(); return;
+      // no-cors: não dá para ler a resposta, então confira sempre pela planilha
+      await fetch(API_URL, {
+        method: 'POST', mode: 'no-cors',
+        headers: {'Content-Type': 'text/plain;charset=utf-8'},
+        body: JSON.stringify({action: 'create', id: sessionId, fields})
+      });
+    } catch (e) {
+      discover.sending = false;
+      discover.error = 'Não foi possível enviar agora. Verifique sua conexão e tente novamente.';
+      render();
+      return;
     }
   }
-  showDone();
+  discover.sending = false;
+  discover.done = true;
+  render();
+  window.scrollTo(0, 0);
 }
 
-function showDone(){
-  doneShown = true;
-  const via = [data['E-mail'].trim() && 'e-mail', data['WhatsApp'].trim() && 'WhatsApp'].filter(Boolean).join(' e ');
-  $('doneText').textContent = `Obrigado, ${data['Nome'].trim()}! Vamos analisar o seu perfil e enviar a sugestão por ${via} em até 48 horas.`;
-  $('formArea').classList.add('hidden'); $('doneArea').classList.remove('hidden');
-  window.scrollTo({top:0, behavior:'smooth'});
-}
-
-// ---------- Gastos ----------
-const EXPENSES = [['Transporte',950],['Hospedagem',1200],['Alimentação',480],['Passeios',350],['Outros',220]];
-function getBudget(){ return EXPENSES.map(([name], i) => ({name, value: Math.max(0, Number($('cost'+i).value) || 0)})); }
-function calcBudget(){
-  const items = getBudget(), total = items.reduce((a, b) => a + b.value, 0);
-  $('budgetTotal').textContent = money(total);
-  $('budgetDetails').textContent = items.map(v => `${v.name}: ${money(v.value)}`).join(' • ');
-}
-
-// ---------- Início ----------
-function init(){
-  $('nav').innerHTML = MENU.map(([id, icon, name]) => `<button data-page="${id}" class="${id === 'inicio' ? 'active' : ''}">${icon} &nbsp; ${name}</button>`).join('');
-  $('mobileNav').innerHTML = MENU.map(([id, icon, name]) => `<button data-page="${id}" class="${id === 'inicio' ? 'active' : ''}">${icon}<br>${name}</button>`).join('');
-  document.querySelectorAll('[data-page]').forEach(b => b.addEventListener('click', () => go(b.dataset.page)));
-  document.querySelectorAll('[data-go]').forEach(b => b.addEventListener('click', () => go(b.dataset.go)));
-
-  $('homeCards').innerHTML = DESTS.slice(0, 3).map(card).join(''); bindWant($('homeCards'));
-  $('typeDest').addEventListener('change', filterDest); $('searchDest').addEventListener('input', filterDest); filterDest();
-
-  $('btnBack').addEventListener('click', () => { if (step > 0){ step--; renderStep(); window.scrollTo({top:0, behavior:'smooth'}); } });
-  $('btnNext').addEventListener('click', () => {
-    if (!valid()) return;
-    if (step < STEPS.length - 1){ step++; renderStep(); window.scrollTo({top:0, behavior:'smooth'}); }
-    else submitForm();
-  });
-  $('btnAgain').addEventListener('click', () => {
-    resetData(); step = 0; doneShown = false;
-    $('doneArea').classList.add('hidden'); $('formArea').classList.remove('hidden'); renderStep();
-  });
-  renderStep();
-
-  $('budgetFields').innerHTML = EXPENSES.map(([name, value], i) => `<div class="cost-row"><label for="cost${i}" style="margin:0">${name}</label><input id="cost${i}" type="number" min="0" step="10" class="input" value="${value}"></div>`).join('');
-  EXPENSES.forEach((e, i) => $('cost'+i).addEventListener('input', calcBudget));
-  const saved = store.get('horizonte-budget', null);
-  if (saved && Array.isArray(saved.values) && saved.values.length === EXPENSES.length){
-    $('tripName').value = saved.name || ''; saved.values.forEach((x, i) => $('cost'+i).value = x);
+function discoverPage() {
+  const D = discover.data;
+  if (discover.done) {
+    const via = [D['E-mail'].trim() && 'e-mail', D['WhatsApp'].trim() && 'WhatsApp'].filter(Boolean).join(' e ');
+    return `
+    <div class="shell section">
+      <div class="wizard-card" style="max-width:720px">
+        <h2>Recebemos o seu pedido! 🎉</h2>
+        <p>Obrigado, ${esc(D['Nome'].trim())}! Vamos analisar o seu perfil e enviar a sugestão por ${via} em até 48 horas.</p>
+        <div class="note">As sugestões são montadas manualmente pela nossa equipe, por isso levam até 48 horas.</div>
+        <div class="stack">${btn('Fazer outro pedido', `discoverAgain()`, 'light')}${btn('Voltar ao início', `nav('home')`, 'green')}</div>
+      </div>
+    </div>`;
   }
-  calcBudget();
-  $('btnSave').addEventListener('click', () => {
-    store.set('horizonte-budget', {name:$('tripName').value, values:getBudget().map(x => x.value)});
-    $('budgetStatus').innerHTML = '<div class="feedback">Orçamento salvo neste navegador.</div>';
-  });
-  $('btnReset').addEventListener('click', () => {
-    EXPENSES.forEach((e, i) => $('cost'+i).value = e[1]); $('tripName').value = 'Minha próxima aventura'; calcBudget(); $('budgetStatus').innerHTML = '';
-  });
+  const last = discover.step === DISCOVER_STEPS.length - 1;
+  const s = DISCOVER_STEPS[discover.step];
+  const extra = last ? `
+    <p class="helper" style="margin:-10px 0 14px">Informe e-mail ou WhatsApp (pelo menos um).</p>
+    <label class="consent">
+      <input type="checkbox" ${D.consent ? 'checked' : ''} onchange="discoverConsent(this.checked)">
+      <span>Autorizo receber a sugestão de destino por esse contato e o uso dos meus dados apenas para esse fim. Os dados não são vendidos nem compartilhados.</span>
+    </label>
+    <input class="hp" tabindex="-1" autocomplete="off" aria-hidden="true" value="${esc(D.hp)}" oninput="discoverHp(this.value)">` : '';
+  return `
+  <div class="shell section">
+    <div class="sec-head"><div>
+      <span class="pill">Sugestão feita à mão</span>
+      <h2>Me ajude a escolher</h2>
+      <p class="muted">Responda em poucos passos. Depois, nossa equipe envia uma sugestão de destino para você.</p>
+    </div></div>
+    <div class="wizard-card" style="max-width:720px">
+      <small>Etapa ${discover.step + 1} de ${DISCOVER_STEPS.length} • ${s.title}</small>
+      <div class="progress"><i style="width:${(discover.step + 1) / DISCOVER_STEPS.length * 100}%"></i></div>
+      ${s.fields.map(discoverField).join('')}
+      ${extra}
+      ${discover.error ? `<div class="err">${discover.error}</div>` : ''}
+      <div class="stack" style="justify-content:space-between;margin-top:20px">
+        ${discover.step > 0 ? btn('← Voltar', `discoverBack()`, 'light') : '<span></span>'}
+        <button class="btn green" id="discoverNext" onclick="discoverNext()" ${discover.sending || !discoverValid() ? 'disabled' : ''}>
+          ${discover.sending ? 'Enviando...' : last ? 'Enviar e receber minha sugestão' : 'Continuar →'}
+        </button>
+      </div>
+    </div>
+  </div>`;
 }
-init();
-</script></body></html>
+
+/* =====================================================================
+   7. APRESENTAÇÃO, MODAL E RENDERIZAÇÃO
+   ===================================================================== */
+function introScreen() {
+  const slides = [
+    {title:'Olá, somos o Viage.', subtitle:'Sua próxima história começa com uma escolha.',
+     body:'Imagine descobrir destinos, organizar cada etapa da viagem e conhecer experiências de outros viajantes sem sair do mesmo lugar.', img:IMG.paris, bg:'#f46b36'},
+    {title:'Descubra, planeje, viva.', subtitle:'Tudo conectado à sua viagem.',
+     body:'Encontre lugares, compare opções, adicione passeios, restaurantes e hotéis ao seu roteiro — mesmo sem reservar nada.', img:IMG.lisboa, bg:'#247d5b'},
+    {title:'Uma viagem em cada momento.', subtitle:'Seus planos, no seu tempo.',
+     body:'Crie mais de um roteiro, escolha dias e horários ou deixe ideias guardadas para decidir depois. Inspire-se com histórias da comunidade.', img:IMG.floripa, bg:'#e86c3c'},
+    {title:'Este é o nosso MVP.', subtitle:'Uma experiência para experimentar e comentar.',
+     body:'Esta versão é demonstrativa: estabelecimentos, preços, passagens e perfis são simulados. Seus roteiros ficam salvos neste navegador. Não existem reservas ou compras reais.', img:IMG.trip, bg:'#245c47'}
+  ];
+  const s = slides[introStep];
+  return `
+  <div class="intro" style="background:${s.bg}"><div class="intro-content">
+    <div>
+      <div style="font:900 30px Outfit;margin-bottom:35px">↗ viage <span style="font-size:13px;font-weight:500">| apresentação interativa</span></div>
+      <h1>${s.title}</h1>
+      <h2 style="font-size:25px;margin-top:10px;color:#fff7">${s.subtitle}</h2>
+      <p>${s.body}</p>
+      <div class="steps">${slides.map((_, i) => `<i class="${i === introStep ? 'active' : ''}"></i>`).join('')}</div>
+      <div class="stack">
+        ${introStep ? btn('← Voltar', `introStep--;render()`, 'light') : ''}
+        ${introStep < 3 ? btn('Continuar →', `introStep++;render()`) : btn('Entrar no Viage →', `state.intro=true;save();render()`)}
+        ${btn('Pular apresentação', `state.intro=true;save();render()`, 'light')}
+      </div>
+    </div>
+    <div class="intro-art"><img src="${s.img}" alt="Fotografia de viagem"></div>
+  </div></div>`;
+}
+
+function renderModal() {
+  $('modals').innerHTML = modal ? `
+    <div class="modal-back" onclick="if(event.target===this)closeModal()">
+      <div class="modal" role="dialog" aria-modal="true" aria-label="Detalhes">
+        <button class="btn light small" style="float:right" onclick="closeModal()">✕ Fechar</button>
+        <div style="clear:both;height:8px"></div>${modal}
+      </div>
+    </div>` : '';
+}
+function closeModal() { modal = ''; renderModal(); }
+
+function exportData() {
+  const blob = new Blob([JSON.stringify(state.trips, null, 2)], {type: 'application/json'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'viage-meus-roteiros.json';
+  a.click();
+  URL.revokeObjectURL(a.href);
+}
+
+const PAGES = {
+  home: homePage, explore: explorePage, dest: destinationPage, planner: plannerPage,
+  trips: tripsPage, trip: itineraryPage, community: communityPage, discover: discoverPage
+};
+
+function render() {
+  const view = (PAGES[page] || homePage)();
+  $('app').innerHTML = navHeader() + view + `
+    <footer class="footer"><div class="shell">
+      ↗ <b>viage</b> — MVP educacional • Dados fictícios e demonstrativos • Roteiros salvos localmente •
+      <button style="border:0;background:none;text-decoration:underline" onclick="state.intro=false;introStep=0;save();render()">Rever apresentação</button> •
+      <button style="border:0;background:none;text-decoration:underline" onclick="exportData()">Exportar meus roteiros</button>
+    </div></footer>`;
+  if (!state.intro) $('app').insertAdjacentHTML('beforeend', introScreen());
+  renderModal();
+}
+
+render();
+</script>
+</body>
+</html>
