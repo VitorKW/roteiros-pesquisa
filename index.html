@@ -170,7 +170,7 @@ if(id==='post-form'){let city=data.get('city'),caption=String(data.get('caption'
 }catch(err){console.error(err);toast(err.message||'Não foi possível salvar.');}
 });
 /* ===== Me ajude a escolher (pedido de sugestão manual de destino) ===== */
-const API_URL = "https://script.google.com/macros/s/AKfycbw8wH0kXpIbZEz10i1zSSWU5Ww9l7-xKeCnFvmGpjkszRvWsFigFuXBn-Ca_Cr0Wik/exec";
+const API_URL = "https://script.google.com/macros/s/AKfycbz-c3u7RrYJFvwntfclvrNgE6Y5RvRDnrLWufDy0RX6QNzCJ1ayDhGcFOHfkrWv3YPD/exec";
 const DISCOVER_STEPS=[
  {title:'Sobre a viagem',sub:'Conte quando e por quanto tempo você quer viajar.',fields:[
   {k:'Quando',label:'Quando você pretende viajar?',type:'chips',opts:['No próximo mês','Em 2 a 3 meses','Em 4 a 6 meses','Em mais de 6 meses','Ainda não sei'],req:true},
